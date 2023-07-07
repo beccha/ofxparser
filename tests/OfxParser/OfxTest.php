@@ -17,8 +17,8 @@ class OfxTest extends TestCase
     public function setUp(): void
     {
         $ofxFile = dirname(__DIR__) . '/fixtures/ofxdata-xml.ofx';
-        $this->ofxData = simplexml_load_string(file_get_contents($ofxFile));
-        $this->ofsContent = new Ofx($this->ofxData);
+//        $ofxFile = dirname(__DIR__) . '/fixtures/ofxdata.ofx';
+        $this->ofsContent = (new Parser())->loadFromFile($ofxFile);
     }
 
     public function testBuildsSignOn(): void
