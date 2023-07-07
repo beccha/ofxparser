@@ -21,6 +21,7 @@ build:
 	@echo -e '\n\e[1;96m>> Build containers\e[0m'
 	docker compose build --no-cache
 
+
 # Deploy vendor
 .PHONY: composer-install
 composer-install:
@@ -48,3 +49,8 @@ phpcs:
 coverage:
 	@echo -e '\n\e[1;96m>> Test coverage\e[0m'
 	docker exec $(shell docker ps -qf "name=php") vendor/bin/phpunit --coverage-text
+
+.PHONY: coverage-html
+coverage-html:
+	@echo -e '\n\e[1;96m>> Test coverage - HTML Report\e[0m'
+	docker exec $(shell docker ps -qf "name=php") vendor/bin/phpunit --coverage-html var/report
