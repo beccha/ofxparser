@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <phpunit
     bootstrap="./vendor/autoload.php"
+    cacheResultFile="./var/.phpunit.result.cache"
     colors="true"
     convertErrorsToExceptions="true"
     convertNoticesToExceptions="true"
@@ -21,4 +22,3 @@
         </whitelist>
     </filter>
 </phpunit>
-
