@@ -1,11 +1,7 @@
 OFX Parser
 =================
 
-## This is a fork of [okonst/ofxparser](https://github.com/okonst/ofxparser)
-
-Added support PHP 8
-Remove Investment Support
-Fix depreciation and refactor
+This is a fork of [oriatec/ofxparser](https://github.com/oriatec/ofxparser)
 
 --------------------
 
@@ -18,7 +14,7 @@ It supports multiple Bank Accounts, the required "Sign On" response, and recogni
 Simply require the package using [Composer](https://getcomposer.org/):
 
 ```bash
-$ composer require oriatec/ofxparser
+$ composer require beccha/ofxparser
 ```
 
 ## Usage
@@ -41,11 +37,36 @@ $transactions = $bankAccount->statement->transactions;
 
 Most common nodes are support. If you come across an inaccessible node in your OFX file, please submit a pull request!
 
-## Investments Support
+## Contribute
 
-Investments support was remove in this version. Please refer to original package : [okonst/ofxparser](https://github.com/okonst/ofxparser)
+### Requirements
+
+You must have docker installed on your system.
+
+### Installation
+
+Clone this repository on your system
+
+```bash 
+git clone https://github.com/ORIATEC/ofxparser.git
+```
+
+Start and build a docker container with php7.4:
+
+```bash 
+make start
+```
+
+Access shell:
+ 
+```bash
+make shell
+```
+
+Full list of commands in the Makefile at the root of the project.
 
 ## Fork & Credits
 
-This is a fork of [okonst/ofxparser](https://github.com/okonst/ofxparser), itself forked of [grimfor/ofxparser](https://github.com/Grimfor/ofxparser) made to be framework independent. The source repo was designed for Symfony 2 framework, so credit should be given where credit due!
-Heavily refactored by [Oliver Lowe](https://github.com/loweoj) and loosely based on the ruby [ofx-parser by Andrew A. Smith](https://github.com/aasmith/ofx-parser).
+This is a fork of [oriatec/ofxparser](https://github.com/oriatec/ofxparser), itself forked of [okonst/ofxparser](https://github.com/okonst/ofxparser), [asgrim/ofxparser](https://github.com/asgrim/ofxparser). Intended to be framework independent. 
+
+Loosely based on the ruby [ofx-parser by Andrew A. Smith](https://github.com/aasmith/ofx-parser).
