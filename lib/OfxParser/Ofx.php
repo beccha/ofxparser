@@ -2,7 +2,6 @@
 
 namespace OfxParser;
 
-use SimpleXMLElement;
 use OfxParser\Entities\AccountInfo;
 use OfxParser\Entities\BankAccount;
 use OfxParser\Entities\Institute;
@@ -10,6 +9,7 @@ use OfxParser\Entities\SignOn;
 use OfxParser\Entities\Statement;
 use OfxParser\Entities\Status;
 use OfxParser\Entities\Transaction;
+use SimpleXMLElement;
 
 /**
  * The OFX object
@@ -125,7 +125,10 @@ class Ofx
         $Bank->routingNumber = $xml->STMTRS->BANKACCTFROM->BANKID;
         $Bank->accountType = $xml->STMTRS->BANKACCTFROM->ACCTTYPE;
         $Bank->balance = $xml->STMTRS->LEDGERBAL->BALAMT;
-        $Bank->balanceDate = $xml->STMTRS->LEDGERBAL->DTASOF ?$this->createDateTimeFromStr($xml->STMTRS->LEDGERBAL->DTASOF, true) : '';
+        $Bank->balanceDate = $xml->STMTRS->LEDGERBAL->DTASOF ? $this->createDateTimeFromStr(
+            $xml->STMTRS->LEDGERBAL->DTASOF,
+            true
+        ) : '';
 
         $Bank->statement = new Statement();
         $Bank->statement->currency = $xml->STMTRS->CURDEF;
@@ -175,8 +178,8 @@ class Ofx
      * YYYYMMDD
      * YYYY-MM-DD
      *
-     * @param  string  $dateString
-     * @param  boolean $ignoreErrors
+     * @param string $dateString
+     * @param boolean $ignoreErrors
      * @return \DateTime | $dateString
      */
     private function createDateTimeFromStr($dateString, $ignoreErrors = false)
@@ -221,7 +224,7 @@ class Ofx
      * 0,000.00 and -0,000.00
      * 000.00 and 000.00
      *
-     * @param  string  $amountString
+     * @param string $amountString
      * @return float
      */
     private function createAmountFromStr($amountString)
@@ -231,17 +234,15 @@ class Ofx
             $amountString = preg_replace(
                 array("/([,]+)/",
                     "/\.?([0-9]{2})$/"
-                    ),
-                array("",
-                    ".$1"),
+                ),
+                array("", ".$1"),
                 $amountString
             );
-        } //000,00 or 0.000,00
-        elseif (preg_match("/^-?([0-9\.]+,?[0-9]{2})$/", $amountString) == 1) {
+        } elseif (preg_match("/^-?([0-9\.]+,?[0-9]{2})$/", $amountString) == 1) {//000,00 or 0.000,00
             $amountString = preg_replace(
                 array("/([\.]+)/",
                     "/,?([0-9]{2})$/"
-                    ),
+                ),
                 array("",
                     ".$1"),
                 $amountString

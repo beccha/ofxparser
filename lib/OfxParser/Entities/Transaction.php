@@ -4,7 +4,6 @@ namespace OfxParser\Entities;
 
 class Transaction extends AbstractEntity
 {
-
     protected $types = array(
         "CREDIT"      => "Generic credit",
         "DEBIT"       => "Generic debit",

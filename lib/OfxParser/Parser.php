@@ -13,7 +13,6 @@ namespace OfxParser;
  */
 class Parser
 {
-
     /**
      * Load an OFX file into this parser by way of a filename
      *
@@ -51,7 +50,7 @@ class Parser
 
         // WHEN TYPE IS EMPTY Wiil BE FILL WITH OTHER
         $enR = str_replace("<TRNTYPE> ", "<TRNTYPE>OTHER", $ofxSgml);
-        
+
         $ofxXml = $this->convertSgmlToXml($enR);
         $xml = $this->xmlLoadString($ofxXml);
 
@@ -62,8 +61,8 @@ class Parser
      * Load an XML string without PHP errors - throws exception instead
      *
      * @param string $xmlString
-     * @throws \Exception
      * @return \SimpleXMLElement
+     * @throws \Exception
      */
     private function xmlLoadString($xmlString)
     {
@@ -89,7 +88,13 @@ class Parser
         // Matches: <SOMETHING>blah
         // Does not match: <SOMETHING>
         // Does not match: <SOMETHING>blah</SOMETHING>
-        if (preg_match("/<([A-Za-z0-9.]+)>([\wà-úÀ-Ú0-9\.\-\_\+\, ;:\[\]\'\&\/\\\*\(\)\+\{\}\!\£\$\?=@€£#%±§~`]+)$/", trim($line), $matches)) {
+        if (
+            preg_match(
+                "/<([A-Za-z0-9.]+)>([\wà-úÀ-Ú0-9\.\-\_\+\, ;:\[\]\'\&\/\\\*\(\)\+\{\}\!\£\$\?=@€£#%±§~`]+)$/",
+                trim($line),
+                $matches
+            )
+        ) {
             return "<{$matches[1]}>{$matches[2]}</{$matches[1]}>";
         }
         return $line;

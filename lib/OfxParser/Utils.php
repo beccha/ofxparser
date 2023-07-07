@@ -2,8 +2,6 @@
 
 namespace OfxParser;
 
-use SimpleXMLElement;
-
 /**
  * Utilities and helpers for conversion and parsing.
  */
@@ -25,8 +23,8 @@ class Utils
      * YYYYMMDDHHMMSS
      * YYYYMMDD
      *
-     * @param  string $dateString
-     * @param  boolean $ignoreErrors
+     * @param string $dateString
+     * @param boolean $ignoreErrors
      * @return \DateTime $dateString
      * @throws \Exception
      */
@@ -35,7 +33,7 @@ class Utils
         if (!isset($dateString) || trim($dateString) === '') {
             return null;
         }
-        
+
         $regex = '/'
             . "(\d{4})(\d{2})(\d{2})?"     // YYYYMMDD             1,2,3
             . "(?:(\d{2})(\d{2})(\d{2}))?" // HHMMSS   - optional  4,5,6
@@ -83,7 +81,7 @@ class Utils
      * 0,000.00 and -0,000.00
      * 000.00 and 000.00
      *
-     * @param  string $amountString
+     * @param string $amountString
      * @return float
      */
     public static function createAmountFromStr($amountString)

@@ -4,7 +4,7 @@ namespace OfxParser\Entities;
 
 class Status extends AbstractEntity
 {
-    protected $codes= [
+    protected $codes = [
         '0'       => 'Success',
         '2000'    => 'General error',
         '15000'   => 'Must change USERPASS',
