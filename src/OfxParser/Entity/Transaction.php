@@ -99,8 +99,7 @@ final class Transaction extends AbstractEntity
 
     public function getTypeDescription(): string
     {
-        $type = (string)$this->type;
-        return $this->types[$type] ?? '';
+        return $this->types[$this->type] ?? '';
     }
 
     /** @deprecated */
