@@ -4,7 +4,7 @@ namespace OfxParser;
 
 use Exception;
 use OfxParser\Entity\BankAccount;
-use OfxParser\Entity\Institute;
+use OfxParser\Entity\Institution;
 use OfxParser\Entity\SignOn;
 use OfxParser\Entity\Statement;
 use OfxParser\Entity\Status;
@@ -27,9 +27,8 @@ use SimpleXMLElement;
  */
 class Ofx
 {
-    public $header;
-    public $signOn;
-    public array $bankAccounts = [];
+    private SignOn $signOn;
+    private array $bankAccounts;
 
     /**
      * @param SimpleXMLElement $xml
@@ -41,6 +40,11 @@ class Ofx
         $this->bankAccounts = $this->buildBankAccounts($xml);
     }
 
+    public function getSignOn(): SignOn
+    {
+        return $this->signOn;
+    }
+
     /**
      * @return array|BankAccount[]
      */
@@ -50,22 +54,23 @@ class Ofx
     }
 
     /**
-     * @param $xml
+     * @param SimpleXMLElement $xml
      * @return SignOn
      * @throws Exception
      */
-    private function buildSignOn($xml)
+    private function buildSignOn(SimpleXMLElement $xml): SignOn
     {
-        $SignOn = new SignOn();
-        $SignOn->status = $this->buildStatus($xml->STATUS);
-        $SignOn->date = $this->createDateTimeFromStr($xml->DTSERVER, true);
-        $SignOn->language = $xml->LANGUAGE;
+        $institute = new Institution(
+            (string)$xml->FI->FID,
+            (string)$xml->FI->ORG
+        );
 
-        $SignOn->institute = new Institute();
-        $SignOn->institute->name = $xml->FI->ORG;
-        $SignOn->institute->id = $xml->FI->FID;
-
-        return $SignOn;
+        return new SignOn(
+            $this->buildStatus($xml->STATUS),
+            $this->createDateTimeFromStr($xml->DTSERVER, true),
+            (string)$xml->LANGUAGE,
+            $institute
+        );
     }
 
     /**
@@ -142,7 +147,7 @@ class Ofx
         return $transactionEntities;
     }
 
-    private function buildStatus($xml): Status
+    private function buildStatus(SimpleXMLElement $xml): Status
     {
         return new Status(
             (string)$xml->CODE,
@@ -207,7 +212,7 @@ class Ofx
      * @param string $amountString
      * @return float
      */
-    private function createAmountFromStr($amountString)
+    private function createAmountFromStr(string $amountString): float
     {
         //000.00 or 0,000.00
         if (preg_match("/^-?([0-9,]+)(\.?)([0-9]{2})$/", $amountString) == 1) {

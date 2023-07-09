@@ -22,15 +22,16 @@ class OfxTest extends TestCase
 
     public function testBuildsSignOn(): void
     {
-        self::assertEquals('', $this->ofsContent->signOn->status->message);
-        self::assertEquals('0', $this->ofsContent->signOn->status->code);
-        self::assertEquals('INFO', $this->ofsContent->signOn->status->getSeverity());
-        self::assertEquals('Success', $this->ofsContent->signOn->status->codeDesc);
+        $signOn = $this->ofsContent->getSignOn();
 
-        self::assertInstanceOf('DateTime', $this->ofsContent->signOn->date);
-        self::assertEquals('ENG', $this->ofsContent->signOn->language);
-        self::assertEquals('MYBANK', $this->ofsContent->signOn->institute->name);
-        self::assertEquals('01234', $this->ofsContent->signOn->institute->id);
+        self::assertEquals('', $signOn->getStatus()->getMessage());
+        self::assertEquals('0', $signOn->getStatus()->getCode());
+        self::assertEquals('INFO', $signOn->getStatus()->getSeverity());
+        self::assertEquals('Success', $signOn->getStatus()->getDescription());
+
+        self::assertEquals('ENG', $signOn->getLanguage());
+        self::assertEquals('MYBANK', $signOn->getInstitution()->getName());
+        self::assertEquals('01234', $signOn->getInstitution()->getId());
     }
 
     /**
@@ -42,7 +43,7 @@ class OfxTest extends TestCase
         $multiOfxData = simplexml_load_string(file_get_contents($multiOfxFile));
         $ofx = new Ofx($multiOfxData);
 
-        self::assertCount(3, $ofx->bankAccounts);
+        self::assertCount(3, $ofx->getBankAccounts());
     }
 
     public function testICanCheckDetailsOfTransactions(): void
