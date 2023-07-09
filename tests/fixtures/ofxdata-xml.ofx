@@ -26,6 +26,7 @@
             <STMTRS>
                 <CURDEF>USD</CURDEF>
                 <BANKACCTFROM>
+                    <BRANCHID>11111</BRANCHID>
                     <BANKID>987654321</BANKID>
                     <ACCTID>098-121</ACCTID>
                     <ACCTTYPE>SAVINGS</ACCTTYPE>

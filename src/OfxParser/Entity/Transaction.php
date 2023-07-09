@@ -60,11 +60,6 @@ final class Transaction
         return $this->payee;
     }
 
-    public function getTypes(): array
-    {
-        return $this->types;
-    }
-
     public function getType(): string
     {
         return $this->type;
@@ -108,11 +103,5 @@ final class Transaction
     public function getTypeDescription(): string
     {
         return $this->types[$this->type] ?? '';
-    }
-
-    /** @deprecated */
-    public function typeDesc(): string
-    {
-        return $this->getTypeDescription();
     }
 }

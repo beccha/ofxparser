@@ -42,10 +42,4 @@ final class Status
     {
         return $this->codes[$this->code] ?? '';
     }
-
-    /** @deprecated */
-    public function codeDesc(): string
-    {
-        return $this->getDescription();
-    }
 }

@@ -24,14 +24,15 @@ class OfxTest extends TestCase
     {
         $signOn = $this->ofsContent->getSignOn();
 
-        self::assertEquals('', $signOn->getStatus()->getMessage());
-        self::assertEquals('0', $signOn->getStatus()->getCode());
-        self::assertEquals('INFO', $signOn->getStatus()->getSeverity());
-        self::assertEquals('Success', $signOn->getStatus()->getDescription());
+        self::assertSame('', $signOn->getStatus()->getMessage());
+        self::assertSame('0', $signOn->getStatus()->getCode());
+        self::assertSame('INFO', $signOn->getStatus()->getSeverity());
+        self::assertSame('Success', $signOn->getStatus()->getDescription());
 
-        self::assertEquals('ENG', $signOn->getLanguage());
-        self::assertEquals('MYBANK', $signOn->getInstitution()->getName());
-        self::assertEquals('01234', $signOn->getInstitution()->getId());
+        self::assertSame('ENG', $signOn->getLanguage());
+        self::assertSame('MYBANK', $signOn->getInstitution()->getName());
+        self::assertSame('01234', $signOn->getInstitution()->getId());
+        self::assertEquals(new \DateTime('2007-10-15T02:15:29.000000+0000'), $signOn->getDate());
     }
 
     /**
@@ -55,6 +56,7 @@ class OfxTest extends TestCase
         $expectedTransactions = [
             [
                 'type'        => 'CREDIT',
+                'date'        => '2007-03-15',
                 'typeDesc'    => 'Generic credit',
                 'amount'      => 20000,
                 'uniqueId'    => '980315001',
@@ -66,7 +68,7 @@ class OfxTest extends TestCase
                 'payee'       => [
                     'name'       => 'Company Name',
                     'address1'   => '123 Main Street',
-                    'address2'   => 'Anytown, USA',
+                    'address2'   => 'Anytown',
                     'address3'   => '',
                     'city'       => 'Anytown',
                     'state'      => 'CA',
@@ -77,6 +79,7 @@ class OfxTest extends TestCase
             ],
             [
                 'type'        => 'CREDIT',
+                'date'        => '2007-03-29',
                 'typeDesc'    => 'Generic credit',
                 'amount'      => 15000,
                 'uniqueId'    => '980310001',
@@ -99,6 +102,7 @@ class OfxTest extends TestCase
             ],
             [
                 'type'        => 'CHECK',
+                'date'        => '2007-07-09',
                 'typeDesc'    => 'Cheque',
                 'amount'      => -10000,
                 'uniqueId'    => '980309001',
@@ -109,7 +113,7 @@ class OfxTest extends TestCase
                 'payeeid'     => '85423',
                 'payee'       => [
                     'name'       => 'Another company',
-                    'address1'   => '123 Broad Street',
+                    'address1'   => '123 Small Street',
                     'address2'   => 'Another',
                     'address3'   => '',
                     'city'       => 'Anytown',
@@ -130,8 +134,20 @@ class OfxTest extends TestCase
             self::assertSame($expectedTransactions[$i]['memo'], $transaction->getMemo());
             self::assertSame($expectedTransactions[$i]['sic'], $transaction->getSic());
             self::assertSame($expectedTransactions[$i]['checkNumber'], $transaction->getCheckNumber());
+            self::assertEquals($expectedTransactions[$i]['date'], $transaction->getDate()->format('Y-m-d'));
 
             self::assertSame($expectedTransactions[$i]['payee']['name'], $transaction->getPayee()->getName());
+            self::assertSame($expectedTransactions[$i]['payee']['address1'], $transaction->getPayee()->getAddress1());
+            self::assertSame($expectedTransactions[$i]['payee']['address2'], $transaction->getPayee()->getAddress2());
+            self::assertSame($expectedTransactions[$i]['payee']['address3'], $transaction->getPayee()->getAddress3());
+            self::assertSame($expectedTransactions[$i]['payee']['city'], $transaction->getPayee()->getCity());
+            self::assertSame($expectedTransactions[$i]['payee']['state'], $transaction->getPayee()->getState());
+            self::assertSame(
+                $expectedTransactions[$i]['payee']['postalCode'],
+                $transaction->getPayee()->getPostalCode()
+            );
+            self::assertSame($expectedTransactions[$i]['payee']['country'], $transaction->getPayee()->getCountry());
+            self::assertSame($expectedTransactions[$i]['payee']['phone'], $transaction->getPayee()->getPhone());
         }
     }
 
@@ -142,6 +158,7 @@ class OfxTest extends TestCase
 
         self::assertSame('23382938', $firstBankAccount->getTransactionUid());
         self::assertSame('098-121', $firstBankAccount->getAccountNumber());
+        self::assertSame('11111', $firstBankAccount->getAgencyNumber());
         self::assertSame('987654321', $firstBankAccount->getRoutingNumber());
         self::assertSame('SAVINGS', $firstBankAccount->getAccountType());
         self::assertSame(525000, $firstBankAccount->getBalance());
