@@ -5,6 +5,7 @@ namespace OfxParser;
 use Exception;
 use OfxParser\Entity\BankAccount;
 use OfxParser\Entity\Institution;
+use OfxParser\Entity\Payee;
 use OfxParser\Entity\SignOn;
 use OfxParser\Entity\Statement;
 use OfxParser\Entity\Status;
@@ -130,6 +131,8 @@ class Ofx
     {
         $transactionEntities = [];
         foreach ($transactions as $t) {
+            $payee = $this->buildPayee($t->PAYEE);
+
             $transaction = new Transaction(
                 (string)$t->TRNTYPE,
                 ($this->createDateTimeFromStr((string)$t->DTPOSTED)),
@@ -138,7 +141,8 @@ class Ofx
                 (string)$t->NAME,
                 (string)$t->MEMO,
                 (string)$t->SIC,
-                (string)$t->CHECKNUM
+                (string)$t->CHECKNUM,
+                $payee
             );
 
             $transactionEntities[] = $transaction;
@@ -153,6 +157,21 @@ class Ofx
             (string)$xml->CODE,
             (string)$xml->SEVERITY,
             (string)$xml->MESSAGE
+        );
+    }
+
+    private function buildPayee(SimpleXMLElement $xml): Payee
+    {
+        return new Payee(
+            (string)$xml->NAME,
+            (string)$xml->ADDR1,
+            (string)$xml->ADDR2,
+            (string)$xml->ADDR3,
+            (string)$xml->CITY,
+            (string)$xml->STATE,
+            (string)$xml->POSTALCODE,
+            (string)$xml->COUNTRY,
+            (string)$xml->PHONE
         );
     }
 

@@ -61,7 +61,19 @@ class OfxTest extends TestCase
                 'name'        => 'DEPOSIT',
                 'memo'        => 'automatic deposit',
                 'sic'         => '',
-                'checkNumber' => ''
+                'checkNumber' => '',
+                'payeeid'     => '12345',
+                'payee'       => [
+                    'name'       => 'Company Name',
+                    'address1'   => '123 Main Street',
+                    'address2'   => 'Anytown, USA',
+                    'address3'   => '',
+                    'city'       => 'Anytown',
+                    'state'      => 'CA',
+                    'postalCode' => '98765',
+                    'country'    => 'USA',
+                    'phone'      => '123-456-7890'
+                ]
             ],
             [
                 'type'        => 'CREDIT',
@@ -71,7 +83,19 @@ class OfxTest extends TestCase
                 'name'        => 'TRANSFER',
                 'memo'        => 'Transfer from checking',
                 'sic'         => '',
-                'checkNumber' => ''
+                'checkNumber' => '',
+                'payeeid'     => '4321',
+                'payee'       => [
+                    'name'       => 'The best company',
+                    'address1'   => '123 Broad Street',
+                    'address2'   => '',
+                    'address3'   => '',
+                    'city'       => 'Thetown',
+                    'state'      => 'CA',
+                    'postalCode' => '15423',
+                    'country'    => 'USA',
+                    'phone'      => '123-444-7890'
+                ]
             ],
             [
                 'type'        => 'CHECK',
@@ -81,7 +105,19 @@ class OfxTest extends TestCase
                 'name'        => 'Cheque',
                 'memo'        => '',
                 'sic'         => '',
-                'checkNumber' => '1025'
+                'checkNumber' => '1025',
+                'payeeid'     => '85423',
+                'payee'       => [
+                    'name'       => 'Another company',
+                    'address1'   => '123 Broad Street',
+                    'address2'   => 'Another',
+                    'address3'   => '',
+                    'city'       => 'Anytown',
+                    'state'      => 'CA',
+                    'postalCode' => '12457',
+                    'country'    => 'USA',
+                    'phone'      => '123-456-45121'
+                ]
             ],
         ];
 
@@ -94,6 +130,8 @@ class OfxTest extends TestCase
             self::assertSame($expectedTransactions[$i]['memo'], $transaction->getMemo());
             self::assertSame($expectedTransactions[$i]['sic'], $transaction->getSic());
             self::assertSame($expectedTransactions[$i]['checkNumber'], $transaction->getCheckNumber());
+
+            self::assertSame($expectedTransactions[$i]['payee']['name'], $transaction->getPayee()->getName());
         }
     }
 
