@@ -25,7 +25,7 @@ final class Transaction extends AbstractEntity
     );
     private string $type;
     private \DateTime $date;
-    private int $amount;
+    private float $amount;
     private string $uniqueId;
     private string $name;
     private string $memo;
@@ -35,7 +35,7 @@ final class Transaction extends AbstractEntity
     public function __construct(
         string $type,
         \DateTime $date,
-        int $amount,
+        float $amount,
         string $uniqueId,
         string $name,
         string $memo,
@@ -44,7 +44,7 @@ final class Transaction extends AbstractEntity
     ) {
         $this->type = $type;
         $this->date = $date;
-        $this->amount = $amount;
+        $this->amount = $amount * 100;
         $this->uniqueId = $uniqueId;
         $this->name = $name;
         $this->memo = $memo;
