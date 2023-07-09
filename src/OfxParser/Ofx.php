@@ -2,6 +2,7 @@
 
 namespace OfxParser;
 
+use Exception;
 use OfxParser\Entity\AccountInfo;
 use OfxParser\Entity\BankAccount;
 use OfxParser\Entity\Institute;
@@ -113,7 +114,7 @@ class Ofx
     /**
      * @param $xml
      * @return BankAccount
-     * @throws \Exception
+     * @throws Exception
      */
     private function buildBankAccount($xml)
     {
@@ -138,23 +139,28 @@ class Ofx
         return $Bank;
     }
 
-    private function buildTransactions($transactions)
+    /**
+     * @throws Exception
+     */
+    private function buildTransactions(SimpleXMLElement $transactions): array
     {
-        $return = [];
+        $transactionEntities = [];
         foreach ($transactions as $t) {
-            $Transaction = new Transaction();
-            $Transaction->type = (string)$t->TRNTYPE;
-            $Transaction->date = $this->createDateTimeFromStr($t->DTPOSTED);
-            $Transaction->amount = $this->createAmountFromStr($t->TRNAMT);
-            $Transaction->uniqueId = (string)$t->FITID;
-            $Transaction->name = (string)$t->NAME;
-            $Transaction->memo = (string)$t->MEMO;
-            $Transaction->sic = $t->SIC;
-            $Transaction->checkNumber = $t->CHECKNUM;
-            $return[] = $Transaction;
+            $transaction = new Transaction(
+                (string)$t->TRNTYPE,
+                ($this->createDateTimeFromStr((string)$t->DTPOSTED)),
+                $this->createAmountFromStr((string)$t->TRNAMT),
+                (string)$t->FITID,
+                (string)$t->NAME,
+                (string)$t->MEMO,
+                (string)$t->SIC,
+                (string)$t->CHECKNUM
+            );
+
+            $transactionEntities[] = $transaction;
         }
 
-        return $return;
+        return $transactionEntities;
     }
 
     private function buildStatus($xml): Status
@@ -201,7 +207,7 @@ class Ofx
 
             try {
                 return new \DateTime($format);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 if ($ignoreErrors) {
                     return null;
                 }
@@ -210,7 +216,7 @@ class Ofx
             }
         }
 
-        throw new \Exception("Failed to initialize DateTime for string: " . $dateString);
+        throw new Exception("Failed to initialize DateTime for string: " . $dateString);
     }
 
     /**

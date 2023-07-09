@@ -54,48 +54,47 @@ class OfxTest extends TestCase
 
         $expectedTransactions = [
             [
-                'type' => 'CREDIT',
-                'typeDesc' => 'Generic credit',
-                'amount' => '200.00',
-                'uniqueId' => '980315001',
-                'name' => 'DEPOSIT',
-                'memo' => 'automatic deposit',
-                'sic' => '',
+                'type'        => 'CREDIT',
+                'typeDesc'    => 'Generic credit',
+                'amount'      => '200.00',
+                'uniqueId'    => '980315001',
+                'name'        => 'DEPOSIT',
+                'memo'        => 'automatic deposit',
+                'sic'         => '',
                 'checkNumber' => ''
             ],
             [
-                'type' => 'CREDIT',
-                'typeDesc' => 'Generic credit',
-                'amount' => '150.00',
-                'uniqueId' => '980310001',
-                'name' => 'TRANSFER',
-                'memo' => 'Transfer from checking',
-                'sic' => '',
+                'type'        => 'CREDIT',
+                'typeDesc'    => 'Generic credit',
+                'amount'      => '150.00',
+                'uniqueId'    => '980310001',
+                'name'        => 'TRANSFER',
+                'memo'        => 'Transfer from checking',
+                'sic'         => '',
                 'checkNumber' => ''
             ],
             [
-                'type' => 'CHECK',
-                'typeDesc' => 'Cheque',
-                'amount' => '-100.00',
-                'uniqueId' => '980309001',
-                'name' => 'Cheque',
-                'memo' => '',
-                'sic' => '',
+                'type'        => 'CHECK',
+                'typeDesc'    => 'Cheque',
+                'amount'      => '-100.00',
+                'uniqueId'    => '980309001',
+                'name'        => 'Cheque',
+                'memo'        => '',
+                'sic'         => '',
                 'checkNumber' => '1025'
             ],
         ];
 
         foreach ($transactions as $i => $transaction) {
-            self::assertEquals($expectedTransactions[$i]['type'], $transaction->type);
-            self::assertEquals($expectedTransactions[$i]['typeDesc'], $transaction->typeDesc);
-            self::assertEquals($expectedTransactions[$i]['amount'], $transaction->amount);
-            self::assertEquals($expectedTransactions[$i]['uniqueId'], $transaction->uniqueId);
-            self::assertEquals($expectedTransactions[$i]['name'], $transaction->name);
-            self::assertEquals($expectedTransactions[$i]['memo'], $transaction->memo);
-            self::assertEquals($expectedTransactions[$i]['sic'], $transaction->sic);
-            self::assertEquals($expectedTransactions[$i]['checkNumber'], $transaction->checkNumber);
-
-            self::assertInstanceOf('DateTime', $transaction->date);
+            self::assertEquals($expectedTransactions[$i]['type'], $transaction->getType());
+            self::assertEquals($expectedTransactions[$i]['typeDesc'], $transaction->getTypeDescription());
+            self::assertEquals($expectedTransactions[$i]['amount'], $transaction->getAmount());
+            self::assertEquals($expectedTransactions[$i]['uniqueId'], $transaction->getUniqueId());
+            self::assertEquals($expectedTransactions[$i]['name'], $transaction->getName());
+            self::assertEquals($expectedTransactions[$i]['memo'], $transaction->getMemo());
+            self::assertEquals($expectedTransactions[$i]['sic'], $transaction->getSic());
+            self::assertEquals($expectedTransactions[$i]['checkNumber'], $transaction->getCheckNumber());
+            self::assertInstanceOf(\DateTime::class, $transaction->getDate());
         }
     }
 

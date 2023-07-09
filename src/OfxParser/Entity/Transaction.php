@@ -2,9 +2,9 @@
 
 namespace OfxParser\Entity;
 
-class Transaction extends AbstractEntity
+final class Transaction extends AbstractEntity
 {
-    protected $types = array(
+    private array $types = array(
         "CREDIT"      => "Generic credit",
         "DEBIT"       => "Generic debit",
         "INT"         => "Interest earned or paid ",
@@ -23,25 +23,89 @@ class Transaction extends AbstractEntity
         "REPEATPMT"   => "Repeating payment/standing order",
         "OTHER"       => "Other"
     );
+    private string $type;
+    private \DateTime $date;
+    private int $amount;
+    private string $uniqueId;
+    private string $name;
+    private string $memo;
+    private string $sic;
+    private string $checkNumber;
 
-    public $type;
-    public $date;
-    public $amount;
-    public $uniqueId;
-    public $name;
-    public $memo;
-    public $sic;
-    public $checkNumber;
+    public function __construct(
+        string $type,
+        \DateTime $date,
+        int $amount,
+        string $uniqueId,
+        string $name,
+        string $memo,
+        string $sic,
+        string $checkNumber
+    ) {
+        $this->type = $type;
+        $this->date = $date;
+        $this->amount = $amount;
+        $this->uniqueId = $uniqueId;
+        $this->name = $name;
+        $this->memo = $memo;
+        $this->sic = $sic;
+        $this->checkNumber = $checkNumber;
+    }
 
-    /**
-     * Get the associated type description
-     *
-     * @return string
-     */
-    public function typeDesc()
+    public function getTypes(): array
     {
-        // Cast SimpleXMLObject to string
-        $type = (string) $this->type;
-        return isset($this->types[$type]) ? $this->types[$type] : '';
+        return $this->types;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    public function getDate(): \DateTime
+    {
+        return $this->date;
+    }
+
+    public function getAmount(): int
+    {
+        return $this->amount;
+    }
+
+    public function getUniqueId(): string
+    {
+        return $this->uniqueId;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getMemo(): string
+    {
+        return $this->memo;
+    }
+
+    public function getSic(): string
+    {
+        return $this->sic;
+    }
+
+    public function getCheckNumber(): string
+    {
+        return $this->checkNumber;
+    }
+
+    public function getTypeDescription(): string
+    {
+        $type = (string)$this->type;
+        return $this->types[$type] ?? '';
+    }
+
+    /** @deprecated */
+    public function typeDesc(): string
+    {
+        return $this->getTypeDescription();
     }
 }
