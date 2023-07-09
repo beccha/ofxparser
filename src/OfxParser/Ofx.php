@@ -51,11 +51,11 @@ class Ofx
     /**
      * Get the transactions that have been processed
      *
-     * @return array
+     * @return array<Transaction>
      */
-    public function getTransactions()
+    public function getTransactions(): array
     {
-        return $this->bankAccount->statement->transactions;
+        return $this->bankAccount->statement->getTransactions();
     }
 
     /**
@@ -130,11 +130,12 @@ class Ofx
             true
         ) : '';
 
-        $Bank->statement = new Statement();
-        $Bank->statement->currency = $xml->STMTRS->CURDEF;
-        $Bank->statement->startDate = $this->createDateTimeFromStr($xml->STMTRS->BANKTRANLIST->DTSTART);
-        $Bank->statement->endDate = $this->createDateTimeFromStr($xml->STMTRS->BANKTRANLIST->DTEND);
-        $Bank->statement->transactions = $this->buildTransactions($xml->STMTRS->BANKTRANLIST->STMTTRN);
+        $Bank->statement = new Statement(
+            (string)$xml->STMTRS->CURDEF,
+            $this->buildTransactions($xml->STMTRS->BANKTRANLIST->STMTTRN),
+            $this->createDateTimeFromStr($xml->STMTRS->BANKTRANLIST->DTSTART),
+            $this->createDateTimeFromStr($xml->STMTRS->BANKTRANLIST->DTEND)
+        );
 
         return $Bank;
     }
@@ -181,12 +182,9 @@ class Ofx
      * YYYYMMDDHHMMSS
      * YYYYMMDD
      * YYYY-MM-DD
-     *
-     * @param string $dateString
-     * @param boolean $ignoreErrors
-     * @return \DateTime | $dateString
+     * @throws Exception
      */
-    private function createDateTimeFromStr($dateString, $ignoreErrors = false)
+    private function createDateTimeFromStr(string $dateString, bool $ignoreErrors = false): ?\DateTime
     {
         $regex = "/"
             . "(\d{4})[-]?(\d{2})[-]?(\d{2})?" // YYYYMMDD   YYYY-MM-DD          1,2,3
@@ -199,9 +197,9 @@ class Ofx
             $year = (int)$matches[1];
             $month = (int)$matches[2];
             $day = (int)$matches[3];
-            $hour = isset($matches[4]) ? $matches[4] : 0;
-            $min = isset($matches[5]) ? $matches[5] : 0;
-            $sec = isset($matches[6]) ? $matches[6] : 0;
+            $hour = isset($matches[4]) ? (int)$matches[4] : 0;
+            $min = isset($matches[5]) ? (int)$matches[5] : 0;
+            $sec = isset($matches[6]) ? (int)$matches[6] : 0;
 
             $format = $year . '-' . $month . '-' . $day . ' ' . $hour . ':' . $min . ':' . $sec;
 
@@ -237,7 +235,7 @@ class Ofx
         if (preg_match("/^-?([0-9,]+)(\.?)([0-9]{2})$/", $amountString) == 1) {
             $amountString = preg_replace(
                 array("/([,]+)/",
-                    "/\.?([0-9]{2})$/"
+                      "/\.?([0-9]{2})$/"
                 ),
                 array("", ".$1"),
                 $amountString
@@ -245,10 +243,10 @@ class Ofx
         } elseif (preg_match("/^-?([0-9\.]+,?[0-9]{2})$/", $amountString) == 1) {//000,00 or 0.000,00
             $amountString = preg_replace(
                 array("/([\.]+)/",
-                    "/,?([0-9]{2})$/"
+                      "/,?([0-9]{2})$/"
                 ),
                 array("",
-                    ".$1"),
+                      ".$1"),
                 $amountString
             );
         }

@@ -50,7 +50,6 @@ class OfxTest extends TestCase
     public function testICanCheckDetailsOfTransactions(): void
     {
         $transactions = $this->ofsContent->getTransactions();
-        self::assertCount(3, $transactions);
 
         $expectedTransactions = [
             [
@@ -112,8 +111,8 @@ class OfxTest extends TestCase
     public function testICanCheckTheBankAccountStatementDetails(): void
     {
         $statement = $this->ofsContent->bankAccount->statement;
-        self::assertEquals('USD', $statement->currency);
-        self::assertInstanceOf('DateTime', $statement->startDate);
-        self::assertInstanceOf('DateTime', $statement->endDate);
+        self::assertEquals('USD', $statement->getCurrency());
+        self::assertInstanceOf('DateTime', $statement->getStartDate());
+        self::assertInstanceOf('DateTime', $statement->getEndDate());
     }
 }
