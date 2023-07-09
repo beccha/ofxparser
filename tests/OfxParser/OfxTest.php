@@ -25,7 +25,7 @@ class OfxTest extends TestCase
     {
         self::assertEquals('', $this->ofsContent->signOn->status->message);
         self::assertEquals('0', $this->ofsContent->signOn->status->code);
-        self::assertEquals('INFO', $this->ofsContent->signOn->status->severity);
+        self::assertEquals('INFO', $this->ofsContent->signOn->status->getSeverity());
         self::assertEquals('Success', $this->ofsContent->signOn->status->codeDesc);
 
         self::assertInstanceOf('DateTime', $this->ofsContent->signOn->date);

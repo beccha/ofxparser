@@ -157,14 +157,13 @@ class Ofx
         return $return;
     }
 
-    private function buildStatus($xml)
+    private function buildStatus($xml): Status
     {
-        $Status = new Status();
-        $Status->code = $xml->CODE;
-        $Status->severity = $xml->SEVERITY;
-        $Status->message = $xml->MESSAGE;
-
-        return $Status;
+        return new Status(
+            (string)$xml->CODE,
+            (string)$xml->SEVERITY,
+            (string)$xml->MESSAGE
+        );
     }
 
     /**
