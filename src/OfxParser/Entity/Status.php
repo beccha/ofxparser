@@ -18,9 +18,9 @@ final class Status extends AbstractEntity
 
     public function __construct(string $code, string $severity, string $message)
     {
-        $this->code = (string)$code;
-        $this->severity = (string)$severity;
-        $this->message = (string)$message;
+        $this->code = $code;
+        $this->severity = $severity;
+        $this->message = $message;
     }
 
     public function getCode(): string
@@ -40,9 +40,7 @@ final class Status extends AbstractEntity
 
     public function getDescription(): string
     {
-        // Cast code to string from SimpleXMLObject
-        $code = (string)$this->code;
-        return $this->codes[$code] ?? '';
+        return $this->codes[$this->code] ?? '';
     }
 
     /** @deprecated */
