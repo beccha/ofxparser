@@ -2,13 +2,13 @@
 
 namespace OfxParser;
 
-use OfxParser\Entities\AccountInfo;
-use OfxParser\Entities\BankAccount;
-use OfxParser\Entities\Institute;
-use OfxParser\Entities\SignOn;
-use OfxParser\Entities\Statement;
-use OfxParser\Entities\Status;
-use OfxParser\Entities\Transaction;
+use OfxParser\Entity\AccountInfo;
+use OfxParser\Entity\BankAccount;
+use OfxParser\Entity\Institute;
+use OfxParser\Entity\SignOn;
+use OfxParser\Entity\Statement;
+use OfxParser\Entity\Status;
+use OfxParser\Entity\Transaction;
 use SimpleXMLElement;
 
 /**
@@ -32,7 +32,6 @@ class Ofx
     public $signupAccountInfo;
     public $bankAccounts = [];
     public $bankAccount;
-    public $investment;
 
     /**
      * @param SimpleXMLElement $xml

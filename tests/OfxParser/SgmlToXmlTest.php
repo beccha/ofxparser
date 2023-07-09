@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OfxParser;
 
+use OfxParser\Service\SgmlToXml;
 use PHPUnit\Framework\TestCase;
 
 class SgmlToXmlTest extends TestCase

@@ -1,6 +1,6 @@
 <?php
 
-namespace OfxParser\Entities;
+namespace OfxParser\Entity;
 
 abstract class AbstractEntity
 {

@@ -4,6 +4,7 @@ namespace OfxParser;
 
 use Exception;
 use InvalidArgumentException;
+use OfxParser\Service\SgmlToXml;
 
 class Parser
 {

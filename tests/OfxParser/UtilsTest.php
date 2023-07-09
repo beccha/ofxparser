@@ -3,6 +3,7 @@
 namespace OfxParser;
 
 use Exception;
+use OfxParser\Service\Utils;
 use PHPUnit\Framework\TestCase;
 
 class UtilsTest extends TestCase

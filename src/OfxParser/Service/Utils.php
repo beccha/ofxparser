@@ -1,6 +1,6 @@
 <?php
 
-namespace OfxParser;
+namespace OfxParser\Service;
 
 /**
  * Utilities and helpers for conversion and parsing.

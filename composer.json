@@ -40,7 +40,7 @@
   },
   "autoload": {
     "psr-0": {
-      "OfxParser": "lib/"
+      "OfxParser": "src/"
     }
   }
 }

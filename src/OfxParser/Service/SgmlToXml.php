@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OfxParser;
+namespace OfxParser\Service;
 
 class SgmlToXml
 {
