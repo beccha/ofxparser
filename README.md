@@ -3,8 +3,7 @@ OFX Parser
 
 This is a fork of [oriatec/ofxparser](https://github.com/oriatec/ofxparser).
 
-Compatibility with version 1 of [oriatec/ofxparser](https://github.com/oriatec/ofxparser) is preserved on version 1 of 
-this library but will be removed on later versions.
+No compatibility with of [oriatec/ofxparser](https://github.com/oriatec/ofxparser) has been preserved.
 
 --------------------
 
