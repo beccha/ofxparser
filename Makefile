@@ -54,3 +54,6 @@ coverage:
 coverage-html:
 	@echo -e '\n\e[1;96m>> Test coverage - HTML Report\e[0m'
 	docker exec $(shell docker ps -qf "name=php") vendor/bin/phpunit --coverage-html var/report
+
+.PHONY: quality-check
+quality-check: fix phpcs coverage
