@@ -11,6 +11,7 @@ use Beccha\OfxParser\Entity\SignOn;
 use Beccha\OfxParser\Entity\Statement;
 use Beccha\OfxParser\Entity\Status;
 use Beccha\OfxParser\Entity\Transaction;
+use Beccha\OfxParser\Exception\UnRecognisedDateFormat;
 use Exception;
 use SimpleXMLElement;
 
@@ -70,7 +71,7 @@ class Ofx
 
         return new SignOn(
             $this->buildStatus($xml->STATUS),
-            $this->createDateTimeFromStr((string)$xml->DTSERVER, true),
+            $this->createDateTimeFromStr((string)$xml->DTSERVER),
             (string)$xml->LANGUAGE,
             $institute
         );
@@ -104,8 +105,7 @@ class Ofx
             (string)$xml->STMTRS->BANKACCTFROM->ACCTTYPE,
             (float)($xml->STMTRS->LEDGERBAL->BALAMT),
             $xml->STMTRS->LEDGERBAL->DTASOF ? $this->createDateTimeFromStr(
-                (string)$xml->STMTRS->LEDGERBAL->DTASOF,
-                true
+                (string)$xml->STMTRS->LEDGERBAL->DTASOF
             ) : '',
             (string)$xml->STMTRS->BANKACCTFROM->BANKID,
             $this->buildStatement($xml),
@@ -138,7 +138,7 @@ class Ofx
             $transaction = new Transaction(
                 (string)$t->TRNTYPE,
                 ($this->createDateTimeFromStr((string)$t->DTPOSTED)),
-                $this->createAmountFromStr((string)$t->TRNAMT),
+                (float)$t->TRNAMT,
                 (string)$t->FITID,
                 (string)$t->NAME,
                 (string)$t->MEMO,
@@ -188,7 +188,7 @@ class Ofx
      * YYYY-MM-DD
      * @throws Exception
      */
-    private function createDateTimeFromStr(string $dateString, bool $ignoreErrors = false): ?\DateTime
+    private function createDateTimeFromStr(string $dateString): \DateTime
     {
         $regex = "/"
             . "(\d{4})[-]?(\d{2})[-]?(\d{2})?" // YYYYMMDD   YYYY-MM-DD          1,2,3
@@ -207,54 +207,8 @@ class Ofx
 
             $format = $year . '-' . $month . '-' . $day . ' ' . $hour . ':' . $min . ':' . $sec;
 
-            try {
-                return new \DateTime($format);
-            } catch (Exception $e) {
-                if ($ignoreErrors) {
-                    return null;
-                }
-
-                throw $e;
-            }
+            return new \DateTime($format);
         }
-
-        throw new Exception("Failed to initialize DateTime for string: " . $dateString);
-    }
-
-    /**
-     * Create a formated number in Float according to different locale options
-     *
-     * Supports:
-     * 000,00 and -000,00
-     * 0.000,00 and -0.000,00
-     * 0,000.00 and -0,000.00
-     * 000.00 and 000.00
-     *
-     * @param string $amountString
-     * @return float
-     */
-    private function createAmountFromStr(string $amountString): float
-    {
-        //000.00 or 0,000.00
-        if (preg_match("/^-?([0-9,]+)(\.?)([0-9]{2})$/", $amountString) == 1) {
-            $amountString = preg_replace(
-                array("/([,]+)/",
-                      "/\.?([0-9]{2})$/"
-                ),
-                array("", ".$1"),
-                $amountString
-            );
-        } elseif (preg_match("/^-?([0-9\.]+,?[0-9]{2})$/", $amountString) == 1) {//000,00 or 0.000,00
-            $amountString = preg_replace(
-                array("/([\.]+)/",
-                      "/,?([0-9]{2})$/"
-                ),
-                array("",
-                      ".$1"),
-                $amountString
-            );
-        }
-
-        return (float)$amountString;
+        throw new UnRecognisedDateFormat($dateString);
     }
 }
