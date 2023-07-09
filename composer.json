@@ -39,8 +39,13 @@
     "squizlabs/php_codesniffer": "~3.7"
   },
   "autoload": {
-    "psr-0": {
-      "OfxParser": "src/"
+    "psr-4": {
+      "Beccha\\OfxParser\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Beccha\\OfxParser\\Tests\\": "tests"
     }
   }
 }

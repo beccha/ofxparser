@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OfxParser\Service;
+namespace Beccha\OfxParser\Service;
 
 class SgmlToXml
 {

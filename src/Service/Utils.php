@@ -1,6 +1,8 @@
 <?php
 
-namespace OfxParser\Service;
+declare(strict_types=1);
+
+namespace Beccha\OfxParser\Service;
 
 /**
  * Utilities and helpers for conversion and parsing.

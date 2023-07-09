@@ -1,7 +1,12 @@
 <?php
 
-namespace OfxParser;
+declare(strict_types=1);
 
+namespace Beccha\OfxParser\Tests;
+
+use Beccha\OfxParser\Entity\Transaction;
+use Beccha\OfxParser\Ofx;
+use Beccha\OfxParser\Parser;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
@@ -125,6 +130,7 @@ class OfxTest extends TestCase
             ],
         ];
 
+        /** @var Transaction $transaction */
         foreach ($transactions as $i => $transaction) {
             self::assertSame($expectedTransactions[$i]['type'], $transaction->getType());
             self::assertSame($expectedTransactions[$i]['typeDesc'], $transaction->getTypeDescription());

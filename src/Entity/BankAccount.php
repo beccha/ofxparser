@@ -1,6 +1,8 @@
 <?php
 
-namespace OfxParser\Entity;
+declare(strict_types=1);
+
+namespace Beccha\OfxParser\Entity;
 
 final class BankAccount
 {
@@ -26,7 +28,7 @@ final class BankAccount
         $this->agencyNumber = $agencyNumber;
         $this->accountNumber = $accountNumber;
         $this->accountType = $accountType;
-        $this->balance = $balance * 100;
+        $this->balance = (int)($balance * 100);
         $this->balanceDate = $balanceDate;
         $this->routingNumber = $routingNumber;
         $this->statement = $statement;

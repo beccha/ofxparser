@@ -1,9 +1,11 @@
 <?php
 
-namespace OfxParser;
+declare(strict_types=1);
 
+namespace Beccha\OfxParser\Tests;
+
+use Beccha\OfxParser\Service\Utils;
 use Exception;
-use OfxParser\Service\Utils;
 use PHPUnit\Framework\TestCase;
 
 class UtilsTest extends TestCase

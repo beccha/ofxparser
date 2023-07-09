@@ -1,15 +1,17 @@
 <?php
 
-namespace OfxParser;
+declare(strict_types=1);
 
+namespace Beccha\OfxParser;
+
+use Beccha\OfxParser\Entity\BankAccount;
+use Beccha\OfxParser\Entity\Institution;
+use Beccha\OfxParser\Entity\Payee;
+use Beccha\OfxParser\Entity\SignOn;
+use Beccha\OfxParser\Entity\Statement;
+use Beccha\OfxParser\Entity\Status;
+use Beccha\OfxParser\Entity\Transaction;
 use Exception;
-use OfxParser\Entity\BankAccount;
-use OfxParser\Entity\Institution;
-use OfxParser\Entity\Payee;
-use OfxParser\Entity\SignOn;
-use OfxParser\Entity\Statement;
-use OfxParser\Entity\Status;
-use OfxParser\Entity\Transaction;
 use SimpleXMLElement;
 
 /**
@@ -68,7 +70,7 @@ class Ofx
 
         return new SignOn(
             $this->buildStatus($xml->STATUS),
-            $this->createDateTimeFromStr($xml->DTSERVER, true),
+            $this->createDateTimeFromStr((string)$xml->DTSERVER, true),
             (string)$xml->LANGUAGE,
             $institute
         );
@@ -97,17 +99,17 @@ class Ofx
     private function buildBankAccount(SimpleXMLElement $xml): BankAccount
     {
         return new BankAccount(
-            $xml->STMTRS->BANKACCTFROM->BRANCHID,
-            $xml->STMTRS->BANKACCTFROM->ACCTID,
-            $xml->STMTRS->BANKACCTFROM->ACCTTYPE,
+            (string)$xml->STMTRS->BANKACCTFROM->BRANCHID,
+            (string)$xml->STMTRS->BANKACCTFROM->ACCTID,
+            (string)$xml->STMTRS->BANKACCTFROM->ACCTTYPE,
             (float)($xml->STMTRS->LEDGERBAL->BALAMT),
             $xml->STMTRS->LEDGERBAL->DTASOF ? $this->createDateTimeFromStr(
-                $xml->STMTRS->LEDGERBAL->DTASOF,
+                (string)$xml->STMTRS->LEDGERBAL->DTASOF,
                 true
             ) : '',
-            $xml->STMTRS->BANKACCTFROM->BANKID,
+            (string)$xml->STMTRS->BANKACCTFROM->BANKID,
             $this->buildStatement($xml),
-            $xml->TRNUID
+            (string)$xml->TRNUID
         );
     }
 
@@ -119,8 +121,8 @@ class Ofx
         return new Statement(
             (string)$xml->STMTRS->CURDEF,
             $this->buildTransactions($xml->STMTRS->BANKTRANLIST->STMTTRN),
-            $this->createDateTimeFromStr($xml->STMTRS->BANKTRANLIST->DTSTART),
-            $this->createDateTimeFromStr($xml->STMTRS->BANKTRANLIST->DTEND)
+            $this->createDateTimeFromStr((string)$xml->STMTRS->BANKTRANLIST->DTSTART),
+            $this->createDateTimeFromStr((string)$xml->STMTRS->BANKTRANLIST->DTEND)
         );
     }
 

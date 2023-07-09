@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace OfxParser;
+namespace Beccha\OfxParser\Tests;
 
-use OfxParser\Service\SgmlToXml;
+use Beccha\OfxParser\Service\SgmlToXml;
 use PHPUnit\Framework\TestCase;
 
 class SgmlToXmlTest extends TestCase

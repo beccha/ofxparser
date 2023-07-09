@@ -1,6 +1,8 @@
 <?php
 
-namespace OfxParser\Entity;
+declare(strict_types=1);
+
+namespace Beccha\OfxParser\Entity;
 
 final class Transaction
 {
@@ -25,7 +27,7 @@ final class Transaction
     );
     private string $type;
     private \DateTime $date;
-    private float $amount;
+    private int $amount;
     private string $uniqueId;
     private string $name;
     private string $memo;
@@ -46,7 +48,7 @@ final class Transaction
     ) {
         $this->type = $type;
         $this->date = $date;
-        $this->amount = $amount * 100;
+        $this->amount = (int)($amount * 100);
         $this->uniqueId = $uniqueId;
         $this->name = $name;
         $this->memo = $memo;

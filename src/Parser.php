@@ -1,10 +1,12 @@
 <?php
 
-namespace OfxParser;
+declare(strict_types=1);
 
+namespace Beccha\OfxParser;
+
+use Beccha\OfxParser\Service\SgmlToXml;
 use Exception;
 use InvalidArgumentException;
-use OfxParser\Service\SgmlToXml;
 
 class Parser
 {

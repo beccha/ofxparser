@@ -1,6 +1,8 @@
 <?php
 
-namespace OfxParser\Entity;
+declare(strict_types=1);
+
+namespace Beccha\OfxParser\Entity;
 
 final class Payee
 {
