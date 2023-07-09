@@ -2,7 +2,7 @@
 
 namespace OfxParser\Entity;
 
-final class Institution extends AbstractEntity
+final class Institution
 {
     private string $id;
     private string $name;

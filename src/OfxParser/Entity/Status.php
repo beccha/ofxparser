@@ -2,7 +2,7 @@
 
 namespace OfxParser\Entity;
 
-final class Status extends AbstractEntity
+final class Status
 {
     protected array $codes = [
         '0'     => 'Success',

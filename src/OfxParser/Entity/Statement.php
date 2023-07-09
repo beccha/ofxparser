@@ -2,7 +2,7 @@
 
 namespace OfxParser\Entity;
 
-final class Statement extends AbstractEntity
+final class Statement
 {
     private string $currency;
     private array $transactions;

@@ -2,7 +2,7 @@
 
 namespace OfxParser\Entity;
 
-final class SignOn extends AbstractEntity
+final class SignOn
 {
     private Status $status;
     private \DateTime $date;

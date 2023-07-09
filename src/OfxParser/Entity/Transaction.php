@@ -2,7 +2,7 @@
 
 namespace OfxParser\Entity;
 
-final class Transaction extends AbstractEntity
+final class Transaction
 {
     private array $types = array(
         "CREDIT"      => "Generic credit",
@@ -31,6 +31,7 @@ final class Transaction extends AbstractEntity
     private string $memo;
     private string $sic;
     private string $checkNumber;
+    private Payee $payee;
 
     public function __construct(
         string $type,
@@ -40,7 +41,8 @@ final class Transaction extends AbstractEntity
         string $name,
         string $memo,
         string $sic,
-        string $checkNumber
+        string $checkNumber,
+        Payee $payee
     ) {
         $this->type = $type;
         $this->date = $date;
@@ -50,6 +52,12 @@ final class Transaction extends AbstractEntity
         $this->memo = $memo;
         $this->sic = $sic;
         $this->checkNumber = $checkNumber;
+        $this->payee = $payee;
+    }
+
+    public function getPayee(): Payee
+    {
+        return $this->payee;
     }
 
     public function getTypes(): array

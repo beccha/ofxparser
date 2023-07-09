@@ -2,7 +2,7 @@
 
 namespace OfxParser\Entity;
 
-final class BankAccount extends AbstractEntity
+final class BankAccount
 {
     private string $agencyNumber;
     private string $accountNumber;
