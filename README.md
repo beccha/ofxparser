@@ -1,15 +1,13 @@
 OFX Parser
 =================
 
-This is a fork of [oriatec/ofxparser](https://github.com/oriatec/ofxparser).
-
-No compatibility with of [oriatec/ofxparser](https://github.com/oriatec/ofxparser) has been preserved.
+This is a fork of [oriatec/ofxparser](https://github.com/oriatec/ofxparser). However, the compatibilty with this library was not preserved.
 
 --------------------
 
 OFX Parser is a PHP library designed to parse an OFX file downloaded from a financial institution into simple PHP objects.
 
-It supports multiple Bank Accounts, the required "Sign On" response, and recognises OFX timestamps.
+Here are the OFX [Specifications](https://financialdataexchange.org/common/Uploaded%20files/OFX%20files/OFX%20Banking%20Specification%20v2.3.pdf).
 
 ## Installation
 
@@ -27,17 +25,16 @@ You can access the nodes in your OFX file as follows:
 $ofxParser = new \OfxParser\Parser();
 $ofx = $ofxParser->loadFromFile('/path/to/your/bankstatement.ofx');
 
-$bankAccount = reset($ofx->bankAccounts);
+$bankAccounts = $ofx->getBankAccounts();
+$firstBankAccount = $bankAccounts[0];
 
 // Get the statement start and end dates
-$startDate = $bankAccount->statement->startDate;
-$endDate = $bankAccount->statement->endDate;
+$startDate = $firstBankAccount->getStatement()->getStartDate();
+$endDate = $firstBankAccount->getStatement()->getEndDate();
 
 // Get the statement transactions for the account
-$transactions = $bankAccount->statement->transactions;
+$transactions = $firstBankAccount->getStatement()->getTransactions();
 ```
-
-Most common nodes are support. If you come across an inaccessible node in your OFX file, please submit a pull request!
 
 ## Contribute
 
