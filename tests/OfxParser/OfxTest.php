@@ -43,12 +43,13 @@ class OfxTest extends TestCase
         $ofx = new Ofx($multiOfxData);
 
         self::assertCount(3, $ofx->bankAccounts);
-        self::assertEmpty($ofx->bankAccount);
     }
 
     public function testICanCheckDetailsOfTransactions(): void
     {
-        $transactions = $this->ofsContent->getTransactions();
+        $bankAccount = $this->ofsContent->getBankAccounts();
+        $firstBankAccount = $bankAccount[0];
+        $transactions = $firstBankAccount->getStatement()->getTransactions();
 
         $expectedTransactions = [
             [
@@ -97,18 +98,23 @@ class OfxTest extends TestCase
 
     public function testICanCheckTheBankAccountDetails(): void
     {
-        $bankAccount = $this->ofsContent->bankAccount;
-        self::assertSame('23382938', $bankAccount->getTransactionUid());
-        self::assertSame('098-121', $bankAccount->getAccountNumber());
-        self::assertSame('987654321', $bankAccount->getRoutingNumber());
-        self::assertSame('SAVINGS', $bankAccount->getAccountType());
-        self::assertSame(525000, $bankAccount->getBalance());
-        self::assertEquals(new \DateTime('2007-10-15T02:15:29.000000+0000'), $bankAccount->getBalanceDate());
+        $bankAccount = $this->ofsContent->getBankAccounts();
+        $firstBankAccount = $bankAccount[0];
+
+        self::assertSame('23382938', $firstBankAccount->getTransactionUid());
+        self::assertSame('098-121', $firstBankAccount->getAccountNumber());
+        self::assertSame('987654321', $firstBankAccount->getRoutingNumber());
+        self::assertSame('SAVINGS', $firstBankAccount->getAccountType());
+        self::assertSame(525000, $firstBankAccount->getBalance());
+        self::assertEquals(new \DateTime('2007-10-15T02:15:29.000000+0000'), $firstBankAccount->getBalanceDate());
     }
 
     public function testICanCheckTheBankAccountStatementDetails(): void
     {
-        $statement = $this->ofsContent->bankAccount->getStatement();
+        $bankAccount = $this->ofsContent->getBankAccounts();
+        $firstBankAccount = $bankAccount[0];
+        $statement = $firstBankAccount->getStatement();
+
         self::assertSame('USD', $statement->getCurrency());
         self::assertEquals(new \DateTime('2007-01-01T00:00:00.000000+0000'), $statement->getStartDate());
         self::assertEquals(new \DateTime('2007-10-15T00:00:00.000000+0000'), $statement->getEndDate());

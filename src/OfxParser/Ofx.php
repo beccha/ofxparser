@@ -3,7 +3,6 @@
 namespace OfxParser;
 
 use Exception;
-use OfxParser\Entity\AccountInfo;
 use OfxParser\Entity\BankAccount;
 use OfxParser\Entity\Institute;
 use OfxParser\Entity\SignOn;
@@ -30,37 +29,30 @@ class Ofx
 {
     public $header;
     public $signOn;
-    public $signupAccountInfo;
-    public $bankAccounts = [];
-    public $bankAccount;
+    public array $bankAccounts = [];
 
     /**
      * @param SimpleXMLElement $xml
+     * @throws Exception
      */
     public function __construct(SimpleXMLElement $xml)
     {
         $this->signOn = $this->buildSignOn($xml->SIGNONMSGSRSV1->SONRS);
-        $this->signupAccountInfo = $this->buildAccountInfo($xml->SIGNUPMSGSRSV1->ACCTINFOTRNRS);
         $this->bankAccounts = $this->buildBankAccounts($xml);
-        // Set a helper if only one bank account
-        if (count($this->bankAccounts) == 1) {
-            $this->bankAccount = $this->bankAccounts[0];
-        }
     }
 
     /**
-     * Get the transactions that have been processed
-     *
-     * @return array<Transaction>
+     * @return array|BankAccount[]
      */
-    public function getTransactions(): array
+    public function getBankAccounts(): array
     {
-        return $this->bankAccount->getStatement()->getTransactions();
+        return $this->bankAccounts;
     }
 
     /**
      * @param $xml
      * @return SignOn
+     * @throws Exception
      */
     private function buildSignOn($xml)
     {
@@ -74,27 +66,6 @@ class Ofx
         $SignOn->institute->id = $xml->FI->FID;
 
         return $SignOn;
-    }
-
-    /**
-     * @param $xml
-     * @return array AccountInfo
-     */
-    private function buildAccountInfo($xml)
-    {
-        if (!isset($xml->ACCTINFO)) {
-            return [];
-        }
-
-        $accounts = [];
-        foreach ($xml->ACCTINFO as $account) {
-            $AccountInfo = new AccountInfo();
-            $AccountInfo->desc = $account->DESC;
-            $AccountInfo->number = $account->ACCTID;
-            $accounts[] = $AccountInfo;
-        }
-
-        return $accounts;
     }
 
     /**
