@@ -1,4 +1,5 @@
 .idea
+!.idea/codeStyles/Project.xml
 .DS_Store
 vendor
 var
