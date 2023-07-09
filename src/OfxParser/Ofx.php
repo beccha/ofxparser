@@ -55,7 +55,7 @@ class Ofx
      */
     public function getTransactions(): array
     {
-        return $this->bankAccount->statement->getTransactions();
+        return $this->bankAccount->getStatement()->getTransactions();
     }
 
     /**
@@ -99,9 +99,10 @@ class Ofx
 
     /**
      * @param SimpleXMLElement $xml
-     * @return array
+     * @return array<BankAccount>
+     * @throws Exception
      */
-    private function buildBankAccounts(SimpleXMLElement $xml)
+    private function buildBankAccounts(SimpleXMLElement $xml): array
     {
         // Loop through the bank accounts
         $bankAccounts = [];
@@ -112,32 +113,38 @@ class Ofx
     }
 
     /**
-     * @param $xml
+     * @param SimpleXMLElement $xml
      * @return BankAccount
      * @throws Exception
      */
-    private function buildBankAccount($xml)
+    private function buildBankAccount(SimpleXMLElement $xml): BankAccount
     {
-        $Bank = new BankAccount();
-        $Bank->transactionUid = $xml->TRNUID;
-        $Bank->agencyNumber = $xml->STMTRS->BANKACCTFROM->BRANCHID;
-        $Bank->accountNumber = $xml->STMTRS->BANKACCTFROM->ACCTID;
-        $Bank->routingNumber = $xml->STMTRS->BANKACCTFROM->BANKID;
-        $Bank->accountType = $xml->STMTRS->BANKACCTFROM->ACCTTYPE;
-        $Bank->balance = $xml->STMTRS->LEDGERBAL->BALAMT;
-        $Bank->balanceDate = $xml->STMTRS->LEDGERBAL->DTASOF ? $this->createDateTimeFromStr(
-            $xml->STMTRS->LEDGERBAL->DTASOF,
-            true
-        ) : '';
+        return new BankAccount(
+            $xml->STMTRS->BANKACCTFROM->BRANCHID,
+            $xml->STMTRS->BANKACCTFROM->ACCTID,
+            $xml->STMTRS->BANKACCTFROM->ACCTTYPE,
+            (float)($xml->STMTRS->LEDGERBAL->BALAMT),
+            $xml->STMTRS->LEDGERBAL->DTASOF ? $this->createDateTimeFromStr(
+                $xml->STMTRS->LEDGERBAL->DTASOF,
+                true
+            ) : '',
+            $xml->STMTRS->BANKACCTFROM->BANKID,
+            $this->buildStatement($xml),
+            $xml->TRNUID
+        );
+    }
 
-        $Bank->statement = new Statement(
+    /**
+     * @throws Exception
+     */
+    private function buildStatement(SimpleXMLElement $xml): Statement
+    {
+        return new Statement(
             (string)$xml->STMTRS->CURDEF,
             $this->buildTransactions($xml->STMTRS->BANKTRANLIST->STMTTRN),
             $this->createDateTimeFromStr($xml->STMTRS->BANKTRANLIST->DTSTART),
             $this->createDateTimeFromStr($xml->STMTRS->BANKTRANLIST->DTEND)
         );
-
-        return $Bank;
     }
 
     /**

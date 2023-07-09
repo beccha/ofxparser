@@ -93,26 +93,25 @@ class OfxTest extends TestCase
             self::assertEquals($expectedTransactions[$i]['memo'], $transaction->getMemo());
             self::assertEquals($expectedTransactions[$i]['sic'], $transaction->getSic());
             self::assertEquals($expectedTransactions[$i]['checkNumber'], $transaction->getCheckNumber());
-            self::assertInstanceOf(\DateTime::class, $transaction->getDate());
         }
     }
 
     public function testICanCheckTheBankAccountDetails(): void
     {
         $bankAccount = $this->ofsContent->bankAccount;
-        self::assertEquals('23382938', $bankAccount->transactionUid);
-        self::assertEquals('098-121', $bankAccount->accountNumber);
-        self::assertEquals('987654321', $bankAccount->routingNumber);
-        self::assertEquals('SAVINGS', $bankAccount->accountType);
-        self::assertEquals('5250.00', $bankAccount->balance);
-        self::assertInstanceOf('DateTime', $bankAccount->balanceDate);
+        self::assertSame('23382938', $bankAccount->getTransactionUid());
+        self::assertSame('098-121', $bankAccount->getAccountNumber());
+        self::assertSame('987654321', $bankAccount->getRoutingNumber());
+        self::assertSame('SAVINGS', $bankAccount->getAccountType());
+        self::assertSame(525000, $bankAccount->getBalance());
+        self::assertEquals(new \DateTime('2007-10-15T02:15:29.000000+0000'), $bankAccount->getBalanceDate());
     }
 
     public function testICanCheckTheBankAccountStatementDetails(): void
     {
-        $statement = $this->ofsContent->bankAccount->statement;
+        $statement = $this->ofsContent->bankAccount->getStatement();
         self::assertEquals('USD', $statement->getCurrency());
-        self::assertInstanceOf('DateTime', $statement->getStartDate());
-        self::assertInstanceOf('DateTime', $statement->getEndDate());
+        self::assertEquals(new \DateTime('2007-01-01T00:00:00.000000+0000'), $statement->getStartDate());
+        self::assertEquals(new \DateTime('2007-10-15T00:00:00.000000+0000'), $statement->getEndDate());
     }
 }
