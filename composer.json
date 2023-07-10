@@ -1,6 +1,6 @@
 {
-  "name": "oriatec/ofxparser",
-  "description": "Simple OFX file parser",
+  "name": "beccha/ofxparser",
+  "description": "OFX file parser",
   "keywords": [
     "ofx",
     "open financial exchange",
