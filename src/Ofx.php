@@ -32,6 +32,10 @@ use SimpleXMLElement;
 class Ofx
 {
     private SignOn $signOn;
+
+    /**
+     * @var array|BankAccount[]
+     */
     private array $bankAccounts;
 
     /**
@@ -127,6 +131,7 @@ class Ofx
     }
 
     /**
+     * @return array<Transaction>
      * @throws Exception
      */
     private function buildTransactions(SimpleXMLElement $transactions): array

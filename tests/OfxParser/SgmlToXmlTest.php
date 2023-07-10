@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 class SgmlToXmlTest extends TestCase
 {
+    private \SimpleXMLElement $data;
+
     protected function setUp(): void
     {
         $sgmlToXml = new SgmlToXml();

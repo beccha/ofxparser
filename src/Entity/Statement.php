@@ -7,10 +7,16 @@ namespace Beccha\OfxParser\Entity;
 final class Statement
 {
     private string $currency;
+    /**
+     * @var array|Transaction[]
+     */
     private array $transactions;
     private \DateTime $startDate;
     private \DateTime $endDate;
 
+    /**
+     * @param array|Transaction[] $transactions
+     */
     public function __construct(
         string $currency,
         array $transactions,
@@ -28,6 +34,9 @@ final class Statement
         return $this->currency;
     }
 
+    /**
+     * @return array|Transaction[]
+     */
     public function getTransactions(): array
     {
         return $this->transactions;

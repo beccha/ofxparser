@@ -28,7 +28,7 @@ class SgmlToXml
         return $this->getXmlContent($xmlFileContent);
     }
 
-    private function loadFile(string $sgmlFilePath)
+    private function loadFile(string $sgmlFilePath): string
     {
         $fileContent = file_get_contents($sgmlFilePath);
         $detectedEncoding = mb_detect_encoding($fileContent);
@@ -46,6 +46,9 @@ class SgmlToXml
         return trim(substr($sgmlFileContent, $sgmlStart));
     }
 
+    /**
+     * @return array<string>
+     */
     private function sgmlContentToArrayOfLines(string $sgmlFileContent): array
     {
         $trimmedLines = [];
@@ -59,6 +62,8 @@ class SgmlToXml
 
     /**
      * Search for tags within a xml file without content
+     * @param array<string> $linesFromSgml
+     * @return array<string>
      */
     private function listTagsWithoutContent(array $linesFromSgml): array
     {
@@ -75,6 +80,9 @@ class SgmlToXml
 
     /**
      * Within a xml file, filter out tags that have a closing couterpart
+     * @param array<string> $linesFromSgml
+     * @param array<string> $tagsWithoutContent
+     * @return array<string>
      */
     private function filterTagsThatHaveAClosingCouterpart(array $linesFromSgml, array $tagsWithoutContent): array
     {
@@ -90,6 +98,9 @@ class SgmlToXml
 
     /**
      * Within a xml file, close tags that are given in the array $tagsToClose
+     * @param array<string> $linesFromSgml
+     * @param array<string> $emptyTagsToClose
+     * @return array<string>
      */
     public function closeTags(array $linesFromSgml, array $emptyTagsToClose): array
     {
@@ -125,13 +136,16 @@ class SgmlToXml
         return str_replace('&', '&amp;', $content);
     }
 
+    /**
+     * @param array<string> $linesFromSgml
+     */
     private function buildXmlFileContent(array $linesFromSgml): string
     {
         array_unshift($linesFromSgml, '<?xml version="1.0" encoding="UTF-8"?>');
         return implode("\n", $linesFromSgml);
     }
 
-    private function getXmlContent(string $fileContent)
+    private function getXmlContent(string $fileContent): \SimpleXMLElement
     {
         return simplexml_load_string($fileContent);
     }

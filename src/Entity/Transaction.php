@@ -6,6 +6,9 @@ namespace Beccha\OfxParser\Entity;
 
 final class Transaction
 {
+    /**
+     * @var array|string[]
+     */
     private array $types = array(
         "CREDIT"      => "Generic credit",
         "DEBIT"       => "Generic debit",

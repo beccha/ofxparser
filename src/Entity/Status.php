@@ -6,6 +6,9 @@ namespace Beccha\OfxParser\Entity;
 
 final class Status
 {
+    /**
+     * @var array|string[]
+     */
     protected array $codes = [
         '0'     => 'Success',
         '2000'  => 'General error',
