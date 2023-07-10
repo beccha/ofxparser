@@ -22,7 +22,7 @@ $ composer require beccha/ofxparser
 You can access the nodes in your OFX file as follows:
 
 ```php
-$ofxParser = new \OfxParser\Parser();
+$ofxParser = new \Beccha\OfxParser\Parser();
 $ofx = $ofxParser->loadFromFile('/path/to/your/bankstatement.ofx');
 
 $bankAccounts = $ofx->getBankAccounts();
