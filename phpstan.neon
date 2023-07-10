@@ -1,0 +1,16 @@
+parameters:
+    level : 8
+    paths:
+        - src
+        - tests
+    bootstrapFiles:
+        - vendor/autoload.php
+    tmpDir: var/phpstan
+    reportUnmatchedIgnoredErrors: false
+    disallowedFunctionCalls:
+        -
+            function: 'var_dump()'
+            message: 'do not leave debug calls around, use a logger if needed'
+includes:
+    - vendor/spaze/phpstan-disallowed-calls/extension.neon
+#    - vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon

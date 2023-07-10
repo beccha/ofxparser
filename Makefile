@@ -40,6 +40,11 @@ fix:
 	@echo -e '\n\e[1;96m>> Fix code style\e[0m'
 	docker exec $(shell docker ps -qf "name=php") vendor/bin/phpcbf
 
+.PHONY: phpstan
+phpstan:
+	@echo -e '\n\e[1;96m>> Check code quality\e[0m'
+	docker exec $(shell docker ps -qf "name=php") vendor/bin/phpstan
+
 .PHONY: phpcs
 phpcs:
 	@echo -e '\n\e[1;96m>> Check code style\e[0m'
@@ -56,4 +61,4 @@ coverage-html:
 	docker exec $(shell docker ps -qf "name=php") vendor/bin/phpunit --coverage-html var/report
 
 .PHONY: quality-check
-quality-check: fix phpcs coverage
+quality-check: phpstan phpcs coverage
