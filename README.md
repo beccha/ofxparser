@@ -47,7 +47,7 @@ You must have docker installed on your system.
 Clone this repository on your system
 
 ```bash 
-git clone https://github.com/ORIATEC/ofxparser.git
+git clone https://github.com/beccha/ofxparser.git
 ```
 
 Start and build a docker container with php7.4:
@@ -60,6 +60,12 @@ Access shell:
  
 ```bash
 make shell
+```
+
+Please make sure to check the quality of your code before submitting a pull request:
+
+```bash
+make quality-check
 ```
 
 Full list of commands in the Makefile at the root of the project.
