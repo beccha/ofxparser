@@ -9,13 +9,10 @@ env:
 
 permissions:
     contents: read
-defaults:
-  run:
-    working-directory: app
 
 jobs:
     linters:
-        name: Linters
+        name: "Linters"
         runs-on: ubuntu-latest
         strategy:
             matrix:
@@ -31,7 +28,7 @@ jobs:
                   coverage: "none"
                   extensions: intl
                   php-version: ${{ matrix.php-version }}
-                  tools: composer:v3
+                  tools: composer:v2
 
             - name: "Set composer cache directory"
               id: composer-cache
@@ -45,11 +42,8 @@ jobs:
                   restore-keys: ${{ runner.os }}-${{ matrix.php-version }}-composer-
 
             - name: "Composer install"
-              run: composer install --no-interaction --no-progress
-
-            - name: "Install PHPUnit"
               id: install
-              run: vendor/bin/simple-phpunit install
+              run: composer install --no-interaction --no-progress
 
             - name: "Lint Composer config"
               if: always() && steps.install.outcome == 'success'
@@ -61,8 +55,8 @@ jobs:
 
             - name: "Run PHPStan"
               if: always() && steps.install.outcome == 'success'
-              run: ./vendor/bin/phpstan analyze
+              run: vendor/bin/phpstan analyze
 
             - name: "Check PHP code style"
-              id: phpcs
-              run: vendor/bin/phpcs --no-cache --report-full --report-checkstyle=./phpcs-report.xml
+              if: always() && steps.install.outcome == 'success'
+              run: vendor/bin/phpcs --no-cache

@@ -97,6 +97,27 @@
                             <PHONE>123-456-45121</PHONE>
                         </PAYEE>
                     </STMTTRN>
+                    <STMTTRN>
+                        <TRNTYPE>CHECK</TRNTYPE>
+                        <DTPOSTED>20070709</DTPOSTED>
+                        <DTUSER>20070709</DTUSER>
+                        <TRNAMT>19.81</TRNAMT>
+                        <FITID>980309001</FITID>
+                        <CHECKNUM>1025</CHECKNUM>
+                        <NAME>Cheque</NAME>
+                        <PAYEEID>85423</PAYEEID>
+                        <PAYEE>
+                            <NAME>Another company</NAME>
+                            <ADDR1>123 Small Street</ADDR1>
+                            <ADDR2>Another</ADDR2>
+                            <ADDR3></ADDR3>
+                            <CITY>Anytown</CITY>
+                            <STATE>CA</STATE>
+                            <POSTALCODE>12457</POSTALCODE>
+                            <COUNTRY>USA</COUNTRY>
+                            <PHONE>123-456-45121</PHONE>
+                        </PAYEE>
+                    </STMTTRN>
                 </BANKTRANLIST>
                 <LEDGERBAL>
                     <BALAMT>5250.00</BALAMT>

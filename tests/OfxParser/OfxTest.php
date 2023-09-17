@@ -139,6 +139,29 @@ class OfxTest extends TestCase
                     'phone'      => '123-456-45121'
                 ]
             ],
+            [ // Test that the amount does not get rounded from 1981 to 1980
+                'type'        => 'CHECK',
+                'date'        => '2007-07-09',
+                'typeDesc'    => 'Cheque',
+                'amount'      => 1981,
+                'uniqueId'    => '980309001',
+                'name'        => 'Cheque',
+                'memo'        => '',
+                'sic'         => '',
+                'checkNumber' => '1025',
+                'payeeid'     => '85423',
+                'payee'       => [
+                    'name'       => 'Another company',
+                    'address1'   => '123 Small Street',
+                    'address2'   => 'Another',
+                    'address3'   => '',
+                    'city'       => 'Anytown',
+                    'state'      => 'CA',
+                    'postalCode' => '12457',
+                    'country'    => 'USA',
+                    'phone'      => '123-456-45121'
+                ]
+            ],
         ];
 
         /** @var Transaction $transaction */

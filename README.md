@@ -56,6 +56,20 @@ Start and build a docker container with php7.4:
 make start
 ```
 
+Deploy Composer packages:
+ 
+```bash
+make init
+```
+
+Launch unit tests:
+ 
+```bash
+make unit
+```
+
+### Other commands
+
 Access shell:
  
 ```bash
