@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Beccha\OfxParser\Tests;
 
 use Beccha\OfxParser\Entity\Transaction;
+use Beccha\OfxParser\Exception\FileNotFoundException;
+use Beccha\OfxParser\Exception\XmlContentNotFoundException;
+use Beccha\OfxParser\Exception\XmlCountentNotFoundException;
 use Beccha\OfxParser\Ofx;
 use Beccha\OfxParser\Parser;
 use Exception;
@@ -46,7 +49,15 @@ class OfxTest extends TestCase
     public function testBuildsMultipleBankAccounts(): void
     {
         $multiOfxFile = dirname(__DIR__) . '/fixtures/ofx-multiple-accounts-xml.ofx';
-        $multiOfxData = simplexml_load_string(file_get_contents($multiOfxFile));
+
+        if (!$fileContent = file_get_contents($multiOfxFile)) {
+            throw new FileNotFoundException('File not found');
+        }
+
+        if (!$multiOfxData = simplexml_load_string($fileContent)) {
+            throw new XmlContentNotFoundException();
+        }
+
         $ofx = new Ofx($multiOfxData);
 
         self::assertCount(3, $ofx->getBankAccounts());

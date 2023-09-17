@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Beccha\OfxParser\Service;
 
+use Beccha\OfxParser\Exception\FileNotFoundException;
+use Beccha\OfxParser\Exception\OfxTagNotFoundException;
+use Beccha\OfxParser\Exception\XmlContentNotFoundException;
+
 class SgmlToXml
 {
     public function parse(string $sgmlFilePath): \SimpleXMLElement
@@ -30,9 +34,13 @@ class SgmlToXml
 
     private function loadFile(string $sgmlFilePath): string
     {
-        $fileContent = file_get_contents($sgmlFilePath);
-        $detectedEncoding = mb_detect_encoding($fileContent);
-        return mb_convert_encoding($fileContent, "UTF-8", $detectedEncoding);
+        if (file_exists($sgmlFilePath) && $fileContent = file_get_contents($sgmlFilePath)) {
+            $detectedEncoding = mb_detect_encoding($fileContent);
+            if ($detectedEncoding) {
+                return mb_convert_encoding($fileContent, "UTF-8", $detectedEncoding);
+            }
+        }
+        throw new FileNotFoundException($sgmlFilePath);
     }
 
     /**
@@ -41,9 +49,10 @@ class SgmlToXml
     private function removeSgmlHeader(string $sgmlFileContent): string
     {
         $upercasedContent = mb_convert_case($sgmlFileContent, MB_CASE_UPPER);
-
-        $sgmlStart = stripos($upercasedContent, '<OFX>');
-        return trim(substr($sgmlFileContent, $sgmlStart));
+        if ($sgmlStart = stripos($upercasedContent, '<OFX>')) {
+            return trim(substr($sgmlFileContent, $sgmlStart));
+        }
+        throw new OfxTagNotFoundException('OFX');
     }
 
     /**
@@ -147,7 +156,11 @@ class SgmlToXml
 
     private function getXmlContent(string $fileContent): \SimpleXMLElement
     {
-        return simplexml_load_string($fileContent);
+        if ($xmlContent = simplexml_load_string($fileContent)) {
+            return $xmlContent;
+        }
+
+        throw new XmlContentNotFoundException();
     }
 
     private function isXml(string $fileContent): bool

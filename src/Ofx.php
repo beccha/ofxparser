@@ -32,7 +32,6 @@ use SimpleXMLElement;
 class Ofx
 {
     private SignOn $signOn;
-
     /**
      * @var array|BankAccount[]
      */
@@ -108,9 +107,9 @@ class Ofx
             (string)$xml->STMTRS->BANKACCTFROM->ACCTID,
             (string)$xml->STMTRS->BANKACCTFROM->ACCTTYPE,
             (float)($xml->STMTRS->LEDGERBAL->BALAMT),
-            $xml->STMTRS->LEDGERBAL->DTASOF ? $this->createDateTimeFromStr(
+            $this->createDateTimeFromStr(
                 (string)$xml->STMTRS->LEDGERBAL->DTASOF
-            ) : '',
+            ),
             (string)$xml->STMTRS->BANKACCTFROM->BANKID,
             $this->buildStatement($xml),
             (string)$xml->TRNUID
