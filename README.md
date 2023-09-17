@@ -1,6 +1,9 @@
 OFX Parser
 =================
 
+[![Tests](https://github.com/beccha/ofxparser/actions/workflows/test.yml/badge.svg)](https://github.com/beccha/ofxparser/actions/workflows/test.yml)
+[![Lint](https://github.com/beccha/ofxparser/actions/workflows/lint.yml/badge.svg)](https://github.com/beccha/ofxparser/actions/workflows/lint.yml)
+
 This is a fork of [oriatec/ofxparser](https://github.com/oriatec/ofxparser). However, the compatibilty with this library was not preserved.
 
 --------------------
