@@ -13,4 +13,5 @@ parameters:
             message: 'do not leave debug calls around, use a logger if needed'
 includes:
     - vendor/spaze/phpstan-disallowed-calls/extension.neon
-#    - vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
+    - phar://phpstan.phar/conf/bleedingEdge.neon

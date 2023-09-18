@@ -48,6 +48,7 @@ phpstan:
 .PHONY: phpcs
 phpcs:
 	@echo -e '\n\e[1;96m>> Check code style\e[0m'
+	docker exec $(shell docker ps -qf "name=php") touch ./var/.phpcs.cache
 	docker exec $(shell docker ps -qf "name=php") vendor/bin/phpcs
 
 .PHONY: coverage
