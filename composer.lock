@@ -305,16 +305,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.25",
+            "version": "1.10.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "578f4e70d117f9a90699324c555922800ac38d8c"
+                "reference": "058ba07e92f744d4dcf6061ae75283d0c6456f2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/578f4e70d117f9a90699324c555922800ac38d8c",
-                "reference": "578f4e70d117f9a90699324c555922800ac38d8c",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/058ba07e92f744d4dcf6061ae75283d0c6456f2e",
+                "reference": "058ba07e92f744d4dcf6061ae75283d0c6456f2e",
                 "shasum": ""
             },
             "require": {
@@ -363,7 +363,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-06T12:11:37+00:00"
+            "time": "2023-10-02T16:18:37+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1752,16 +1752,16 @@
         },
         {
             "name": "spaze/phpstan-disallowed-calls",
-            "version": "v2.15.1",
+            "version": "v2.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spaze/phpstan-disallowed-calls.git",
-                "reference": "f80ca038a4052224c562f07d43cfe913113192d0"
+                "reference": "c7a80cc9747e6307bfa6f5ea88ed3f9b1804790c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spaze/phpstan-disallowed-calls/zipball/f80ca038a4052224c562f07d43cfe913113192d0",
-                "reference": "f80ca038a4052224c562f07d43cfe913113192d0",
+                "url": "https://api.github.com/repos/spaze/phpstan-disallowed-calls/zipball/c7a80cc9747e6307bfa6f5ea88ed3f9b1804790c",
+                "reference": "c7a80cc9747e6307bfa6f5ea88ed3f9b1804790c",
                 "shasum": ""
             },
             "require": {
@@ -1807,7 +1807,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spaze/phpstan-disallowed-calls/issues",
-                "source": "https://github.com/spaze/phpstan-disallowed-calls/tree/v2.15.1"
+                "source": "https://github.com/spaze/phpstan-disallowed-calls/tree/v2.16.0"
             },
             "funding": [
                 {
@@ -1815,7 +1815,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-07-01T21:33:24+00:00"
+            "time": "2023-07-26T11:37:27+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
