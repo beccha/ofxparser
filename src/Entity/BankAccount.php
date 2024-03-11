@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Beccha\OfxParser\Entity;
 
+use DateTime;
+
 final class BankAccount
 {
     private string $agencyNumber;
     private string $accountNumber;
     private string $accountType;
     private int $balance;
-    private \DateTime $balanceDate;
+    private DateTime $balanceDate;
     private string $routingNumber;
     private Statement $statement;
     private string $transactionUid;
@@ -20,7 +22,7 @@ final class BankAccount
         string $accountNumber,
         string $accountType,
         float $balance,
-        \DateTime $balanceDate,
+        DateTime $balanceDate,
         string $routingNumber,
         Statement $statement,
         string $transactionUid
@@ -55,7 +57,7 @@ final class BankAccount
         return $this->balance;
     }
 
-    public function getBalanceDate(): \DateTime
+    public function getBalanceDate(): DateTime
     {
         return $this->balanceDate;
     }

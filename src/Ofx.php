@@ -12,6 +12,7 @@ use Beccha\OfxParser\Entity\Statement;
 use Beccha\OfxParser\Entity\Status;
 use Beccha\OfxParser\Entity\Transaction;
 use Beccha\OfxParser\Exception\UnRecognisedDateFormat;
+use DateTime;
 use Exception;
 use SimpleXMLElement;
 
@@ -192,13 +193,13 @@ class Ofx
      * YYYY-MM-DD
      * @throws Exception
      */
-    private function createDateTimeFromStr(string $dateString): \DateTime
+    private function createDateTimeFromStr(string $dateString): DateTime
     {
         $regex = "/"
-            . "(\d{4})[-]?(\d{2})[-]?(\d{2})?" // YYYYMMDD   YYYY-MM-DD          1,2,3
+            . "(\d{4})-?(\d{2})-?(\d{2})?" // YYYYMMDD   YYYY-MM-DD          1,2,3
             . "(?:(\d{2})(\d{2})(\d{2}))?" // HHMMSS   - optional  4,5,6
             . "(?:\.(\d{3}))?" // .XXX     - optional  7
-            . "(?:\[(-?\d+)\:(\w{3}\]))?" // [-n:TZ]  - optional  8,9
+            . "(?:\[(-?\d+):(\w{3}]))?" // [-n:TZ]  - optional  8,9
             . "/";
 
         if (preg_match($regex, $dateString, $matches)) {
@@ -211,7 +212,7 @@ class Ofx
 
             $format = $year . '-' . $month . '-' . $day . ' ' . $hour . ':' . $min . ':' . $sec;
 
-            return new \DateTime($format);
+            return new DateTime($format);
         }
         throw new UnRecognisedDateFormat($dateString);
     }

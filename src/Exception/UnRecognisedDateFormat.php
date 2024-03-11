@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Beccha\OfxParser\Exception;
 
-class UnRecognisedDateFormat extends \RuntimeException
+use RuntimeException;
+
+class UnRecognisedDateFormat extends RuntimeException
 {
     public function __construct(string $dateString)
     {

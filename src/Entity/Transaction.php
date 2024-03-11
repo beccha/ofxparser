@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Beccha\OfxParser\Entity;
 
+use DateTime;
+
 final class Transaction
 {
     /**
@@ -29,7 +31,7 @@ final class Transaction
         "OTHER"       => "Other"
     );
     private string $type;
-    private \DateTime $date;
+    private DateTime $date;
     private int $amount;
     private string $uniqueId;
     private string $name;
@@ -40,7 +42,7 @@ final class Transaction
 
     public function __construct(
         string $type,
-        \DateTime $date,
+        DateTime $date,
         float $amount,
         string $uniqueId,
         string $name,
@@ -74,7 +76,7 @@ final class Transaction
         return $this->type;
     }
 
-    public function getDate(): \DateTime
+    public function getDate(): DateTime
     {
         return $this->date;
     }

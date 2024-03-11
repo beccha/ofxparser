@@ -6,14 +6,14 @@ namespace Beccha\OfxParser\Tests;
 
 use Beccha\OfxParser\Exception\FileNotFoundException;
 use Beccha\OfxParser\Exception\OfxTagNotFoundException;
-use Beccha\OfxParser\Exception\UnRecognisedDateFormat;
 use Beccha\OfxParser\Exception\XmlContentNotFoundException;
 use Beccha\OfxParser\Service\SgmlToXml;
 use PHPUnit\Framework\TestCase;
+use SimpleXMLElement;
 
 class SgmlToXmlTest extends TestCase
 {
-    private \SimpleXMLElement $data;
+    private SimpleXMLElement $data;
 
     protected function setUp(): void
     {
@@ -24,7 +24,7 @@ class SgmlToXmlTest extends TestCase
     public function testSgmlHeaderIsRemoved(): void
     {
         $this->assertNotFalse($this->data);
-        $this->assertInstanceOf(\SimpleXMLElement::class, $this->data);
+        $this->assertInstanceOf(SimpleXMLElement::class, $this->data);
     }
 
     public function testIGetAnExceptionWhenNoOfxTagIsFoundWithinTheFile(): void

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Beccha\OfxParser\Entity;
 
+use DateTime;
+
 final class Statement
 {
     private string $currency;
@@ -11,8 +13,8 @@ final class Statement
      * @var array|Transaction[]
      */
     private array $transactions;
-    private \DateTime $startDate;
-    private \DateTime $endDate;
+    private DateTime $startDate;
+    private DateTime $endDate;
 
     /**
      * @param array|Transaction[] $transactions
@@ -20,8 +22,8 @@ final class Statement
     public function __construct(
         string $currency,
         array $transactions,
-        \DateTime $startDate,
-        \DateTime $endDate
+        DateTime $startDate,
+        DateTime $endDate
     ) {
         $this->currency = $currency;
         $this->transactions = $transactions;
@@ -42,12 +44,12 @@ final class Statement
         return $this->transactions;
     }
 
-    public function getStartDate(): \DateTime
+    public function getStartDate(): DateTime
     {
         return $this->startDate;
     }
 
-    public function getEndDate(): \DateTime
+    public function getEndDate(): DateTime
     {
         return $this->endDate;
     }

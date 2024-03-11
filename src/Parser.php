@@ -18,7 +18,7 @@ class Parser
     public function loadFromFile(string $ofxFile): Ofx
     {
         if (false === file_exists($ofxFile)) {
-            throw new InvalidArgumentException("File '{$ofxFile}' could not be found");
+            throw new InvalidArgumentException("File '$ofxFile' could not be found");
         }
 
         return $this->loadFromString($ofxFile);

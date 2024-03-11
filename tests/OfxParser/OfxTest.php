@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Beccha\OfxParser\Tests;
 
-use Beccha\OfxParser\Entity\Transaction;
 use Beccha\OfxParser\Exception\FileNotFoundException;
 use Beccha\OfxParser\Exception\XmlContentNotFoundException;
-use Beccha\OfxParser\Exception\XmlCountentNotFoundException;
 use Beccha\OfxParser\Ofx;
 use Beccha\OfxParser\Parser;
+use DateTime;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
@@ -40,7 +39,7 @@ class OfxTest extends TestCase
         self::assertSame('ENG', $signOn->getLanguage());
         self::assertSame('MYBANK', $signOn->getInstitution()->getName());
         self::assertSame('01234', $signOn->getInstitution()->getId());
-        self::assertEquals(new \DateTime('2007-10-15T02:15:29.000000+0000'), $signOn->getDate());
+        self::assertEquals(new DateTime('2007-10-15T02:15:29.000000+0000'), $signOn->getDate());
     }
 
     /**
@@ -140,31 +139,30 @@ class OfxTest extends TestCase
                 ]
             ],
             [ // Test that the amount does not get rounded from 1981 to 1980
-                'type'        => 'CHECK',
-                'date'        => '2007-07-09',
-                'typeDesc'    => 'Cheque',
-                'amount'      => 1981,
-                'uniqueId'    => '980309001',
-                'name'        => 'Cheque',
-                'memo'        => '',
-                'sic'         => '',
-                'checkNumber' => '1025',
-                'payeeid'     => '85423',
-                'payee'       => [
-                    'name'       => 'Another company',
-                    'address1'   => '123 Small Street',
-                    'address2'   => 'Another',
-                    'address3'   => '',
-                    'city'       => 'Anytown',
-                    'state'      => 'CA',
-                    'postalCode' => '12457',
-                    'country'    => 'USA',
-                    'phone'      => '123-456-45121'
-                ]
+              'type'        => 'CHECK',
+              'date'        => '2007-07-09',
+              'typeDesc'    => 'Cheque',
+              'amount'      => 1981,
+              'uniqueId'    => '980309001',
+              'name'        => 'Cheque',
+              'memo'        => '',
+              'sic'         => '',
+              'checkNumber' => '1025',
+              'payeeid'     => '85423',
+              'payee'       => [
+                  'name'       => 'Another company',
+                  'address1'   => '123 Small Street',
+                  'address2'   => 'Another',
+                  'address3'   => '',
+                  'city'       => 'Anytown',
+                  'state'      => 'CA',
+                  'postalCode' => '12457',
+                  'country'    => 'USA',
+                  'phone'      => '123-456-45121'
+              ]
             ],
         ];
 
-        /** @var Transaction $transaction */
         foreach ($transactions as $i => $transaction) {
             self::assertSame($expectedTransactions[$i]['type'], $transaction->getType());
             self::assertSame($expectedTransactions[$i]['typeDesc'], $transaction->getTypeDescription());
@@ -202,7 +200,7 @@ class OfxTest extends TestCase
         self::assertSame('987654321', $firstBankAccount->getRoutingNumber());
         self::assertSame('SAVINGS', $firstBankAccount->getAccountType());
         self::assertSame(525000, $firstBankAccount->getBalance());
-        self::assertEquals(new \DateTime('2007-10-15T02:15:29.000000+0000'), $firstBankAccount->getBalanceDate());
+        self::assertEquals(new DateTime('2007-10-15T02:15:29.000000+0000'), $firstBankAccount->getBalanceDate());
     }
 
     public function testICanCheckTheBankAccountStatementDetails(): void
@@ -212,7 +210,7 @@ class OfxTest extends TestCase
         $statement = $firstBankAccount->getStatement();
 
         self::assertSame('USD', $statement->getCurrency());
-        self::assertEquals(new \DateTime('2007-01-01T00:00:00.000000+0000'), $statement->getStartDate());
-        self::assertEquals(new \DateTime('2007-10-15T00:00:00.000000+0000'), $statement->getEndDate());
+        self::assertEquals(new DateTime('2007-01-01T00:00:00.000000+0000'), $statement->getStartDate());
+        self::assertEquals(new DateTime('2007-10-15T00:00:00.000000+0000'), $statement->getEndDate());
     }
 }
