@@ -6,8 +6,8 @@ namespace Beccha\OfxParser\Tests;
 
 use Beccha\OfxParser\Exception\UnRecognisedDateFormat;
 use Beccha\OfxParser\Parser;
-use Beccha\OfxParser\Service\SgmlToXml;
 use Exception;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class ParserTest extends TestCase
@@ -19,7 +19,7 @@ class ParserTest extends TestCase
     {
         $parser = new Parser();
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $parser->loadFromFile('file/does/not.exists.xml');
     }
 

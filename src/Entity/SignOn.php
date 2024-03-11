@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace Beccha\OfxParser\Entity;
 
+use DateTime;
+
 final class SignOn
 {
     private Status $status;
-    private \DateTime $date;
+    private DateTime $date;
     private string $language;
     private Institution $institution;
 
     public function __construct(
         Status $status,
-        \DateTime $date,
+        DateTime $date,
         string $language,
         Institution $institute
     ) {
@@ -28,7 +30,7 @@ final class SignOn
         return $this->status;
     }
 
-    public function getDate(): \DateTime
+    public function getDate(): DateTime
     {
         return $this->date;
     }

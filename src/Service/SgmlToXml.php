@@ -7,10 +7,11 @@ namespace Beccha\OfxParser\Service;
 use Beccha\OfxParser\Exception\FileNotFoundException;
 use Beccha\OfxParser\Exception\OfxTagNotFoundException;
 use Beccha\OfxParser\Exception\XmlContentNotFoundException;
+use SimpleXMLElement;
 
 class SgmlToXml
 {
-    public function parse(string $sgmlFilePath): \SimpleXMLElement
+    public function parse(string $sgmlFilePath): SimpleXMLElement
     {
         $fileContent = $this->loadFile($sgmlFilePath);
 
@@ -154,7 +155,7 @@ class SgmlToXml
         return implode("\n", $linesFromSgml);
     }
 
-    private function getXmlContent(string $fileContent): \SimpleXMLElement
+    private function getXmlContent(string $fileContent): SimpleXMLElement
     {
         if ($xmlContent = simplexml_load_string($fileContent)) {
             return $xmlContent;

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Beccha\OfxParser\Exception;
 
-class OfxTagNotFoundException extends \RuntimeException
+use RuntimeException;
+
+class OfxTagNotFoundException extends RuntimeException
 {
     public function __construct(string $tag)
     {

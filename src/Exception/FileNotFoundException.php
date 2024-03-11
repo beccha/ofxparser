@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Beccha\OfxParser\Exception;
 
-class FileNotFoundException extends \RuntimeException
+use RuntimeException;
+
+class FileNotFoundException extends RuntimeException
 {
     public function __construct(string $filePath)
     {
