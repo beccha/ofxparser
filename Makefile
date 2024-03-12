@@ -51,6 +51,12 @@ phpcs:
 	docker exec $(shell docker ps -qf "name=php") touch ./var/.phpcs.cache
 	docker exec $(shell docker ps -qf "name=php") vendor/bin/phpcs
 
+.PHONY: composer
+composer:
+	@echo -e '\n\e[1;96m>> Check composer\e[0m'
+	docker exec $(shell docker ps -qf "name=php") composer validate --strict
+	docker exec $(shell docker ps -qf "name=php") composer audit
+
 .PHONY: coverage
 coverage:
 	@echo -e '\n\e[1;96m>> Test coverage\e[0m'
@@ -62,4 +68,4 @@ coverage-html:
 	docker exec $(shell docker ps -qf "name=php") vendor/bin/phpunit --coverage-html var/report
 
 .PHONY: quality-check
-quality-check: phpstan phpcs coverage
+quality-check: phpstan phpcs coverage composer
