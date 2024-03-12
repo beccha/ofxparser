@@ -32,7 +32,8 @@
     "php": "~7.4|^8.0|^8.1",
     "ext-simplexml": "*",
     "ext-libxml": "*",
-    "ext-mbstring": "*"
+    "ext-mbstring": "*",
+    "twig/twig": "^3.8"
   },
   "require-dev": {
     "phpunit/phpunit": "~9.6",
