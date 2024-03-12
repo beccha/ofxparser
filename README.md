@@ -20,7 +20,7 @@ Here are the OFX [Specifications](https://financialdataexchange.org/common/Uploa
 
 Simply require the package using [Composer](https://getcomposer.org/):
 
-```bash
+```sh
 $ composer require beccha/ofxparser
 ```
 
@@ -53,25 +53,25 @@ You must have docker installed on your system.
 
 Clone this repository on your system
 
-```bash 
+```sh 
 git clone https://github.com/beccha/ofxparser.git
 ```
 
 Start and build a docker container with php7.4:
 
-```bash 
+```sh 
 make start
 ```
 
 Deploy Composer packages:
  
-```bash
+```sh
 make init
 ```
 
 Launch unit tests:
  
-```bash
+```sh
 make unit
 ```
 
@@ -79,13 +79,13 @@ make unit
 
 Access shell:
  
-```bash
+```sh
 make shell
 ```
 
 Please make sure to check the quality of your code before submitting a pull request:
 
-```bash
+```sh
 make quality-check
 ```
 
