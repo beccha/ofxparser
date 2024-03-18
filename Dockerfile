@@ -1,4 +1,4 @@
-FROM php:8.1-fpm-alpine
+FROM php:8.3-fpm-alpine
 RUN apk update && apk add build-base
 RUN curl -sS https://getcomposer.org/installer | php \
         && mv composer.phar /usr/local/bin/ \
