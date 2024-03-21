@@ -73,7 +73,7 @@ class ToOfx
                 $this->createTransaction($writer, $transaction);
             }
             $writer->endElement(); // BANKTRANLIST
-            $this->createLedgerBalance($writer);
+            $this->createLedgerBalance($writer, $bank);
             $writer->endElement(); // STMTRS
             $writer->endElement(); // STMTTRNRS
             $writer->endElement(); // BANKMSGSRSV1
@@ -100,7 +100,7 @@ class ToOfx
         $writer->text($transaction->getDate()->format('YmdHis'));
         $writer->endElement(); // DTPOSTED
         $writer->startElement('TRNAMT');
-        $writer->text(number_format(($transaction->getAmount() / 100), 2, '.', ''));
+        $writer->text($this->formatAmount($transaction->getAmount()));
         $writer->endElement(); // TRNAMT
         $writer->startElement('FITID');
         $writer->text($transaction->getUniqueId());
@@ -190,14 +190,14 @@ class ToOfx
      * @param XMLWriter $writer
      * @return void
      */
-    private function createLedgerBalance(XMLWriter $writer): void
+    private function createLedgerBalance(XMLWriter $writer, BankAccount $bank): void
     {
         $writer->startElement('LEDGERBAL');
         $writer->startElement('BALAMT');
-        $writer->text('');
+        $writer->text($this->formatAmount($bank->getBalance()));
         $writer->endElement(); // BALAMT
         $writer->startElement('DTASOF');
-        $writer->text('');
+        $writer->text($bank->getBalanceDate()->format('YmdHis'));
         $writer->endElement(); // DTASOF
         $writer->endElement(); // LEDGERBAL
     }
@@ -211,7 +211,7 @@ class ToOfx
     {
         $writer->startElement('BANKACCTFROM');
         $writer->startElement('BANKID');
-        $writer->text('');
+        $writer->text($bank->getRoutingNumber());
         $writer->endElement(); // BANKID
         $writer->startElement('ACCTID');
         $writer->text($bank->getAccountNumber());
@@ -220,5 +220,10 @@ class ToOfx
         $writer->text($bank->getAccountType());
         $writer->endElement(); // ACCTTYPE
         $writer->endElement(); // BANKACCTFROM
+    }
+
+    private function formatAmount(int $amount): string
+    {
+        return number_format(($amount / 100), 2, '.', '');
     }
 }
