@@ -262,7 +262,7 @@ class ToOfx
      * @param $bank
      * @return void
      */
-    private function createBankAccountFrom(XMLWriter $writer, $bank): void
+    private function createBankAccountFrom(XMLWriter $writer, BankAccount $bank): void
     {
         $writer->startElement('BANKACCTFROM');
         $writer->startElement('BANKID');
