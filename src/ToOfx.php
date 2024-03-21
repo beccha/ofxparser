@@ -13,12 +13,16 @@ class ToOfx
     /**
      * @var array<BankAccount>
      */
-    private array $banques;
+    private array $banks;
     private SignOn $signOn;
 
-    public function __construct(SignOn $signOn, array $banque)
+    /**
+     * @param SignOn $signOn
+     * @param array<BankAccount> $banks
+     */
+    public function __construct(SignOn $signOn, array $banks)
     {
-        $this->banques = $banque;
+        $this->banks = $banks;
         $this->signOn = $signOn;
     }
 
@@ -31,13 +35,21 @@ class ToOfx
         $writer->setIndentString(' ');
 
         // Write OFX declaration
-        $writer->writeRaw('<?OFX OFXHEADER="200" VERSION="211" SECURITY="NONE" OLDFILEUID="NONE" NEWFILEUID="12345678901234567890123456789012"?>' . "\n");
+        $writer->writeRaw(
+            '<?OFX'
+            . 'OFXHEADER="200"'
+            . 'VERSION="211"'
+            . 'SECURITY="NONE"'
+            . 'OLDFILEUID="NONE"'
+            . 'NEWFILEUID="12345678901234567890123456789012"?>'
+            . "\n"
+        );
 
         $writer->startElement('OFX');
         $this->createSignOn($writer);
 
         // Banks
-        foreach ($this->banques as $bank) {
+        foreach ($this->banks as $bank) {
             $bank->getTransactionUid();
             $writer->startElement('BANKMSGSRSV1');
             $writer->startElement('STMTTRNRS');
@@ -195,7 +207,7 @@ class ToOfx
      * @param $bank
      * @return void
      */
-    private function createBankAccountFrom(XMLWriter $writer, $bank): void
+    private function createBankAccountFrom(XMLWriter $writer, BankAccount $bank): void
     {
         $writer->startElement('BANKACCTFROM');
         $writer->startElement('BANKID');
