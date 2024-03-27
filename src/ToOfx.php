@@ -191,25 +191,6 @@ class ToOfx
      * @param XMLWriter $writer
      * @return void
      */
-    private function bankStatus(XMLWriter $writer): void
-    {
-        $writer->startElement('STATUS');
-        $writer->startElement('CODE');
-        $writer->text('');
-        $writer->endElement(); // CODE
-        $writer->startElement('SEVERITY');
-        $writer->text('');
-        $writer->endElement(); // SEVERITY
-        $writer->startElement('MESSAGE');
-        $writer->text('');
-        $writer->endElement(); // MESSAGE
-        $writer->endElement(); // STATUS
-    }
-
-    /**
-     * @param XMLWriter $writer
-     * @return void
-     */
     private function createSignOnFi(XMLWriter $writer): void
     {
         $writer->startElement('FI');
