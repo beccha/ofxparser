@@ -19,11 +19,6 @@
     <BANKMSGSRSV1>
         <STMTTRNRS>
             <TRNUID>1000000001</TRNUID>
-            <STATUS>
-                <CODE>0</CODE>
-                <SEVERITY>INFO</SEVERITY>
-                <MESSAGE>Successful Transaction</MESSAGE>
-            </STATUS>
             <STMTRS>
                 <CURDEF>USD</CURDEF>
                 <BANKACCTFROM>

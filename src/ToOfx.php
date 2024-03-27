@@ -37,11 +37,11 @@ class ToOfx
         // Write OFX declaration
         $writer->writeRaw(
             '<?OFX'
-            . 'OFXHEADER="200"'
-            . 'VERSION="211"'
-            . 'SECURITY="NONE"'
-            . 'OLDFILEUID="NONE"'
-            . 'NEWFILEUID="12345678901234567890123456789012"?>'
+            . ' OFXHEADER="200"'
+            . ' VERSION="211"'
+            . ' SECURITY="NONE"'
+            . ' OLDFILEUID="NONE"'
+            . ' NEWFILEUID="12345678901234567890123456789012"?>'
             . "\n"
         );
 
@@ -56,7 +56,6 @@ class ToOfx
             $writer->startElement('TRNUID');
             $writer->text($bank->getTransactionUid());
             $writer->endElement(); // TRNUID
-            $this->bankStatus($writer);
             $writer->startElement('STMTRS');
             $writer->startElement('CURDEF');
             $writer->text($bank->getStatement()->getCurrency());
@@ -130,25 +129,6 @@ class ToOfx
         $this->createSignOnFi($writer);
         $writer->endElement(); // SONRS
         $writer->endElement(); // SIGNONMSGSRSV1
-    }
-
-    /**
-     * @param XMLWriter $writer
-     * @return void
-     */
-    private function bankStatus(XMLWriter $writer): void
-    {
-        $writer->startElement('STATUS');
-        $writer->startElement('CODE');
-        $writer->text('');
-        $writer->endElement(); // CODE
-        $writer->startElement('SEVERITY');
-        $writer->text('');
-        $writer->endElement(); // SEVERITY
-        $writer->startElement('MESSAGE');
-        $writer->text('');
-        $writer->endElement(); // MESSAGE
-        $writer->endElement(); // STATUS
     }
 
     /**

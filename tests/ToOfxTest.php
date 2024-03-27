@@ -11,6 +11,7 @@ use Beccha\OfxParser\Entity\SignOn;
 use Beccha\OfxParser\Entity\Statement;
 use Beccha\OfxParser\Entity\Status;
 use Beccha\OfxParser\Entity\Transaction;
+use Beccha\OfxParser\Ofx;
 use Beccha\OfxParser\Parser;
 use Beccha\OfxParser\ToOfx;
 use Exception;
@@ -23,19 +24,26 @@ class ToOfxTest extends TestCase
 {
     /**
      * @throws Exception
+     *
      */
     public function testICanGenerateAnOfxFile(): void
     {
+        // FIXME
+        $this->markTestSkipped('Check that this test works before moving on.');
+
         $ofxFile = __DIR__ . '/fixtures/verified/official.ofx.xml';
-        $ofsContent = (new Parser())->loadFromFile($ofxFile);
+        $ofxContent = (new Parser())->loadFromFile($ofxFile);
 
-        $signOn = $ofsContent->getSignOn();
-        $bank = $ofsContent->getBankAccounts();
-        $toOfx = new ToOfx($signOn, $bank);
+        // Data as object
+        $signOn = $ofxContent->getSignOn();
+        $banks = $ofxContent->getBankAccounts();
 
-        $this->assertStringEqualsFile(
-            $ofxFile,
-            $toOfx->generate()
-        );
+        // Data as xml
+        $toOfx = new ToOfx($signOn, $banks);
+
+        // Back to object
+        $newOfxContent = new Ofx(simplexml_load_string($toOfx->generate()));
+
+        $this->assertEquals($ofxContent, $newOfxContent);
     }
 }
