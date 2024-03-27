@@ -4,3 +4,4 @@ services:
     build: .
     volumes:
       - .:/app
+      - ./var/sessions:/root:rw
