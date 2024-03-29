@@ -50,7 +50,6 @@ class ToOfx
 
         // Banks
         foreach ($this->banks as $bank) {
-            $bank->getTransactionUid();
             $writer->startElement('BANKMSGSRSV1');
             $writer->startElement('STMTTRNRS');
             $writer->startElement('TRNUID');
