@@ -69,3 +69,13 @@ coverage-html:
 
 .PHONY: quality-check
 quality-check: phpstan phpcs coverage composer
+
+.PHONY: sonar-reports
+sonar-reports:
+					docker exec $(shell docker ps -qf "name=php") \
+				/bin/sh -c "XDEBUG_MODE=coverage php vendor/bin/phpunit ./tests --coverage-clover=var/artifacts/coverage.xml --log-junit=var/artifacts/unit.xml" \
+				/bin/sh -c "sed -i 's+/app/+./+g' var/artifacts/coverage.xml" \
+				/bin/sh -c "sed -i 's+/app/+./+g' var/artifacts/unit.xml"
+					docker exec $(shell docker ps -qf "name=php") \
+				/bin/sh -c "vendor/bin/phpstan analyse --memory-limit 2048M --error-format=json > var/artifacts/phpstan.json" \
+				/bin/sh -c "sed -i 's+/app/+./+g' var/artifacts/phpstan.json"
