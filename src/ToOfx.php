@@ -106,6 +106,9 @@ class ToOfx
         $writer->startElement('NAME');
         $writer->text($transaction->getName());
         $writer->endElement(); // NAME
+        $writer->startElement('MEMO');
+        $writer->text($transaction->getMemo());
+        $writer->endElement(); // NAME
         $writer->endElement(); // STMTTRN
     }
 
