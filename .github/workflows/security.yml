@@ -1,0 +1,23 @@
+name: "Security"
+
+on:
+  - push
+  - pull_request
+
+env:
+    fail-fast: true
+
+permissions:
+  contents: read
+
+jobs:
+  vulnerabilities:
+    name: "Check for packages vulnerabilities"
+    runs-on: ubuntu-latest
+    steps:
+    - name: "Checkout"
+      uses: actions/checkout@v4
+    - name: "Download local-php-security-checker"
+      run: curl -L -o local-php-security-checker https://github.com/fabpot/local-php-security-checker/releases/download/v2.0.6/local-php-security-checker_2.0.6_linux_amd64 && chmod +x local-php-security-checker
+    - name: "Check for vulnerabilities"
+      run: ./local-php-security-checker

@@ -3,6 +3,7 @@ OFX Parser
 
 [![Tests](https://github.com/beccha/ofxparser/actions/workflows/test.yml/badge.svg)](https://github.com/beccha/ofxparser/actions/workflows/test.yml)
 [![Lint](https://github.com/beccha/ofxparser/actions/workflows/lint.yml/badge.svg)](https://github.com/beccha/ofxparser/actions/workflows/lint.yml)
+[![Security](https://github.com/beccha/ofxparser/actions/workflows/security.yml/badge.svg)](https://github.com/beccha/ofxparser/actions/workflows/security.yml)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/beccha/ofxparser/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/beccha/ofxparser/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/beccha/ofxparser/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/beccha/ofxparser/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/beccha/ofxparser/badges/build.png?b=master)](https://scrutinizer-ci.com/g/beccha/ofxparser/build-status/master)
