@@ -203,10 +203,6 @@ class ToOfx
         $writer->endElement(); // FI
     }
 
-    /**
-     * @param XMLWriter $writer
-     * @return void
-     */
     private function createServerStatus(XMLWriter $writer): void
     {
         $writer->startElement('STATUS');
@@ -222,10 +218,6 @@ class ToOfx
         $writer->endElement(); // STATUS
     }
 
-    /**
-     * @param XMLWriter $writer
-     * @return void
-     */
     private function createLedgerBalance(XMLWriter $writer, BankAccount $bank): void
     {
         $writer->startElement('LEDGERBAL');
@@ -240,7 +232,7 @@ class ToOfx
 
     /**
      * @param XMLWriter $writer
-     * @param $bank
+     * @param BankAccount $bank
      * @return void
      */
     private function createBankAccountFrom(XMLWriter $writer, BankAccount $bank): void
