@@ -17,7 +17,6 @@ class ToOfx
     private SignOn $signOn;
 
     /**
-     * @param SignOn $signOn
      * @param array<BankAccount> $banks
      */
     public function __construct(SignOn $signOn, array $banks)
@@ -83,11 +82,6 @@ class ToOfx
         return $writer->outputMemory(true);
     }
 
-    /**
-     * @param XMLWriter $writer
-     * @param Entity\Transaction $transaction
-     * @return void
-     */
     private function createTransaction(XMLWriter $writer, Entity\Transaction $transaction): void
     {
         $writer->startElement('STMTTRN');
@@ -112,10 +106,6 @@ class ToOfx
         $writer->endElement(); // STMTTRN
     }
 
-    /**
-     * @param XMLWriter $writer
-     * @return void
-     */
     private function createSignOn(XMLWriter $writer): void
     {
 // SignOn
@@ -133,10 +123,6 @@ class ToOfx
         $writer->endElement(); // SIGNONMSGSRSV1
     }
 
-    /**
-     * @param XMLWriter $writer
-     * @return void
-     */
     private function createSignOnFi(XMLWriter $writer): void
     {
         $writer->startElement('FI');
@@ -149,10 +135,6 @@ class ToOfx
         $writer->endElement(); // FI
     }
 
-    /**
-     * @param XMLWriter $writer
-     * @return void
-     */
     private function createServerStatus(XMLWriter $writer): void
     {
         $writer->startElement('STATUS');
@@ -168,10 +150,6 @@ class ToOfx
         $writer->endElement(); // STATUS
     }
 
-    /**
-     * @param XMLWriter $writer
-     * @return void
-     */
     private function createLedgerBalance(XMLWriter $writer, BankAccount $bank): void
     {
         $writer->startElement('LEDGERBAL');
@@ -186,7 +164,7 @@ class ToOfx
 
     /**
      * @param XMLWriter $writer
-     * @param $bank
+     * @param BankAccount $bank
      * @return void
      */
     private function createBankAccountFrom(XMLWriter $writer, BankAccount $bank): void
