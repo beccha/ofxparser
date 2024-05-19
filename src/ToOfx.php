@@ -150,6 +150,11 @@ class ToOfx
         $writer->endElement(); // STATUS
     }
 
+    /**
+     * @param XMLWriter $writer
+     * @param BankAccount $bank
+     * @return void
+     */
     private function createLedgerBalance(XMLWriter $writer, BankAccount $bank): void
     {
         $writer->startElement('LEDGERBAL');
@@ -184,74 +189,6 @@ class ToOfx
 
     private function formatAmount(int $amount): string
     {
-        return number_format(($amount / 100), 2, '.', '');
-    }
-
-    /**
-     * @param XMLWriter $writer
-     * @return void
-     */
-    private function createSignOnFi(XMLWriter $writer): void
-    {
-        $writer->startElement('FI');
-        $writer->startElement('ORG');
-        $writer->text($this->signOn->getInstitution()->getName());
-        $writer->endElement(); // ORG
-        $writer->startElement('FID');
-        $writer->text($this->signOn->getInstitution()->getId());
-        $writer->endElement(); // FID
-        $writer->endElement(); // FI
-    }
-
-    private function createServerStatus(XMLWriter $writer): void
-    {
-        $writer->startElement('STATUS');
-        $writer->startElement('CODE');
-        $writer->text($this->signOn->getStatus()->getCode());
-        $writer->endElement(); // CODE
-        $writer->startElement('SEVERITY');
-        $writer->text($this->signOn->getStatus()->getSeverity());
-        $writer->endElement(); // SEVERITY
-        $writer->startElement('MESSAGE');
-        $writer->text($this->signOn->getStatus()->getMessage());
-        $writer->endElement(); // MESSAGE
-        $writer->endElement(); // STATUS
-    }
-
-    private function createLedgerBalance(XMLWriter $writer, BankAccount $bank): void
-    {
-        $writer->startElement('LEDGERBAL');
-        $writer->startElement('BALAMT');
-        $writer->text($this->formatAmount($bank->getBalance()));
-        $writer->endElement(); // BALAMT
-        $writer->startElement('DTASOF');
-        $writer->text($bank->getBalanceDate()->format('YmdHis'));
-        $writer->endElement(); // DTASOF
-        $writer->endElement(); // LEDGERBAL
-    }
-
-    /**
-     * @param XMLWriter $writer
-     * @param BankAccount $bank
-     * @return void
-     */
-    private function createBankAccountFrom(XMLWriter $writer, BankAccount $bank): void
-    {
-        $writer->startElement('BANKACCTFROM');
-        $writer->startElement('BANKID');
-        $writer->text($bank->getRoutingNumber());
-        $writer->endElement(); // BANKID
-        $writer->startElement('ACCTID');
-        $writer->text($bank->getAccountNumber());
-        $writer->endElement(); // ACCTID
-        $writer->startElement('ACCTTYPE');
-        $writer->text($bank->getAccountType());
-        $writer->endElement(); // ACCTTYPE
-        $writer->endElement(); // BANKACCTFROM
-    }
-
-    private function formatAmount(int $amount): string
-    {
-        return number_format(($amount / 100), 2, '.', '');
+        return number_format((float)\bcdiv((string)$amount, '100', 2), 2, '.', '');
     }
 }

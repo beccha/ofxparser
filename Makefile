@@ -8,7 +8,7 @@ shell:
 
 .PHONY: down
 down:
-	@echo -e '\n\e[1;96m>>Stop containers\e[0m'
+	@echo -e '\n\e[1;96m>> Stop containers\e[0m'
 	docker compose down --remove-orphans
 
 .PHONY: start
