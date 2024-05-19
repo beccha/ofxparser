@@ -53,11 +53,7 @@ final class Transaction
     ) {
         $this->type = $type;
         $this->date = $date;
-
-        // Convert float to int without risk to get rounded down (19.81 to 1980)
-        $amountToString = (string)($amount * 100);
-        $this->amount = (int)$amountToString;
-
+        $this->amount = (int)(\bcmul((string)$amount, '100'));
         $this->uniqueId = $uniqueId;
         $this->name = $name;
         $this->memo = $memo;
