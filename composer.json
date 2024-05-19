@@ -33,7 +33,8 @@
     "ext-simplexml": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
-    "ext-xmlwriter": "*"
+    "ext-xmlwriter": "*",
+    "ext-bcmath": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "~9.6",
